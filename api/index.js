@@ -1,10 +1,11 @@
 const express = require('express')
 const app = express(); //instantiate an express app
 const port = 9103;
-const bodyparser = require('body-parser')
+//const bodyparser = require('body-parser')
+var path = require('path');
 
 //middlewares
-app.use(bodyparser.json())
+//app.use(bodyparser.json())
 
 //initialize port for node application to run
 app.listen(port, () => {
@@ -12,13 +13,8 @@ app.listen(port, () => {
 });
 
 //get example
-app.get('/',(req,res) =>{
-	res.send("hello world")
-})
+app.get('/interoperability/api/',(req,res) =>{
+	res.sendFile(path.join(__dirname + '/index.html'));
+});
 
-//post example
-app.post('/checkParser', (req, res) => {
-	console.log("Using Body-parser: ", req.body.value)
-	res.send({"body":req.body})
-})
 
