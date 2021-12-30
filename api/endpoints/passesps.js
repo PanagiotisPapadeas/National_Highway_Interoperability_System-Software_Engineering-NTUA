@@ -28,6 +28,11 @@ function getpassespsData(req,res){
 	con.connect(function(err) {
 		if (err) throw err;
 		console.log("Connected!");
+	let myquery2="SELECT station_name as Sta FROM station where station_name ="+"'"+req.params.stationID+"'";
+		con.query(myquery1, function (err, resul, fields){
+			if (err) throw err;
+			test.StationOperator = resul[0]["Sta"];
+		});
 	let myquery1="SELECT count(*) as Num FROM passes, tags WHERE passes.tagID = tags.tagID and stationID ="+"'"+req.params.stationID+"'"+" and timestamp >="+"'"+req.params.date_from+"'"+" and timestamp <="+"'"+req.params.date_to+"'";
 		con.query(myquery1, function (err, resu, fields){
 			if (err) throw err;
