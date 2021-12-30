@@ -7,13 +7,15 @@ function health(req,res){
 		host: "localhost",
 		user: "root",
 		password: "",
-		database:""
+		database: "db_softeng_2131"
 	});
 
 	con.connect(function(err) {
-		if (err) throw(err);
-		console.log("Connected!");
+		if (err) res.status(400).send("Not Connected");
+		else {
+			console.log("Connected!");
 		res.status(200).send("Connected");
+		}
 	});
 }
 
