@@ -2,6 +2,11 @@ const express = require('express');
 const router = express.Router();
 //const converter = require('json-2-csv');
 var mysql = require('mysql');
+var today = new Date();
+var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+var time = today.getHours()+":"+today.getMinutes()+":"+today.getSeconds();
+var dateTime = date+' '+time;
+
 
 function getchargesbyData(req,res){
 	var con = mysql.createConnection({
@@ -15,6 +20,7 @@ function getchargesbyData(req,res){
 
 	};
 	test.op_ID = req.params.op_ID;
+	test.RequestTimestamp = dateTime;
 	test.PeriodFrom = req.params.date_from;
 	test.PeriodTo = req.params.date_to;
 
