@@ -23,7 +23,7 @@ function getchargesbyData(req,res){
 	test.RequestTimestamp = dateTime;
 	test.PeriodFrom = req.params.date_from;
 	test.PeriodTo = req.params.date_to;
-
+        var l = req.query.format;
 
 	con.connect(function(err) {
 		if (err) throw err;
@@ -32,11 +32,12 @@ function getchargesbyData(req,res){
 		con.query(myquery, function (err, result, fields){
 			if (err) throw err;
 			test.PPOList = result;
-			//converter.json2csv(test, function(err, csv){
-			//	if (err) throw err;
-			//        res.send(csv);
-			//});
-	                res.send(test);
+			if (l=="csv"){
+			converter.json2csv(test, function(err, csv){
+				if (err) throw err;
+			        res.send(csv);
+			});}
+			else {res.send(test);}
 		});
 	});
 }

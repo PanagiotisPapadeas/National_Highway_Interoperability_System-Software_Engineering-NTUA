@@ -24,7 +24,7 @@ function getpassescData(req,res){
 	test.RequestTimestamp = dateTime;
 	test.PeriodFrom = req.params.date_from;
 	test.PeriodTo = req.params.date_to;
-
+        var l = req.query.format;
 
 	con.connect(function(err) {
 		if (err) throw err;
@@ -34,11 +34,12 @@ function getpassescData(req,res){
 			if (err) throw err;
 			test.NumberOfPasses = result.NumberOfPasses;
 			test.PassesCost = result.PassesCost;
-			//converter.json2csv(test, function(err, csv){a
-			//	if (err) throw err;
-			//        res.send(csv);
-			//});
-	                res.send(test);
+			if (l=="csv"){
+			converter.json2csv(test, function(err, csv){a
+				if (err) throw err;
+			        res.send(csv);
+			});}
+			else {res.send(test);}
 		});
 	});
 }

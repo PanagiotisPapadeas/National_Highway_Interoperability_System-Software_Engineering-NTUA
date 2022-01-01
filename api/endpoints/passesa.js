@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-//const converter = require('json-2-csv');
+const converter = require('json-2-csv');
 var mysql = require('mysql');
 var today = new Date();
 var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
@@ -24,6 +24,7 @@ function getpassesaData(req,res){
 	test.RequestTimestamp = dateTime;
 	test.PeriodFrom = req.params.date_from;
 	test.PeriodTo = req.params.date_to;
+	var l = req.query.format;
 
 
 	con.connect(function(err) {
@@ -38,11 +39,12 @@ function getpassesaData(req,res){
 		con.query(myquery, function (err, result, fields){
 			if (err) throw err;
 			test.PassesList = result;
-			//converter.json2csv(test, function(err, csv){
-			//	if (err) throw err;
-			//        res.send(csv);
-			//});
-	                res.send(test);
+			if (l=="csv"){
+			converter.json2csv(test, function(err, csv){
+				if (err) throw err;
+			        res.send(csv);
+			});}
+			else {res.send(test);}
 		});
 	});
 }
