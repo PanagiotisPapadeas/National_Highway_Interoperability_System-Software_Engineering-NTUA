@@ -12,8 +12,8 @@ function getpassescData(req,res){
 	var con = mysql.createConnection({
 		host: "localhost",
 		user: "root",
-		password: "",
-		database:"db_softeng_2131"
+		password: "panoplos",
+		database:"softeng2131"
 	});
 
 	var test = { 
@@ -29,11 +29,11 @@ function getpassescData(req,res){
 	con.connect(function(err) {
 		if (err) throw err;
 		console.log("Connected!");
-		let myquery="SELECT count(*) as NumberOfPasses, sum(amount) as PassesCost from passes where operatorID1="+"'"+req.params.op1_ID+"'"+" and operatorID2="+"'"+req.params.op2_ID+"'"+" and timestamp >="+"'"+req.params.date_from+"'"+" and timestamp <="+"'"+req.params.date_to+"'";
+		let myquery="SELECT count(*) as Num, sum(amount) as PassesC from passes where operatorID1="+"'"+req.params.op1_ID+"'"+" and operatorID2="+"'"+req.params.op2_ID+"'"+" and timestamp >="+"'"+req.params.date_from+"'"+" and timestamp <="+"'"+req.params.date_to+"'";
 		con.query(myquery, function (err, result, fields){
 			if (err) throw err;
-			test.NumberOfPasses = result.NumberOfPasses;
-			test.PassesCost = result.PassesCost;
+			test.NumberOfPasses = result[0]["Num"];
+			test.PassesCost = result[0]["PassesC"];
 			if (l=="csv"){
 			converter.json2csv(test, function(err, csv){a
 				if (err) throw err;
@@ -44,5 +44,5 @@ function getpassescData(req,res){
 	});
 }
 
-router.get('/PassesCost/:op1_ID/:op2_ID/:date_from/:date_to',getpassescData);
+router.get('/interoperability/api/PassesCost/:op1_ID/:op2_ID/:date_from/:date_to',getpassescData);
 module.exports = router;

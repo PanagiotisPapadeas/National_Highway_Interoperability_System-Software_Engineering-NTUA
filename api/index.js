@@ -1,11 +1,11 @@
 const express = require('express')
 const app = express(); //instantiate an express app
 const port = 9103;
-//const bodyparser = require('body-parser')
+const bodyparser = require('body-parser')
 var path = require('path');
 
 //middlewares
-//app.use(bodyparser.json())
+app.use(bodyparser.json())
 
 //initialize port for node application to run
 app.listen(port, () => {
@@ -22,8 +22,8 @@ app.post('/interoperability/api/admin/resetpasses',(req,res) =>{
 	var con = mysql.createConnection({
 		host: "localhost",
 		user: "root",
-		password: "",
-		database:"db_softeng_2131"
+		password: "panoplos",
+		database:"softeng2131"
 	});
         
 	var suc={
@@ -49,8 +49,8 @@ app.post('/interoperability/api/admin/resetstations',(req,res) =>{
 	var con = mysql.createConnection({
 		host: "localhost",
 		user: "root",
-		password: "",
-		database:"db_softeng_2131"
+		password: "panoplos",
+		database:"softeng2131"
 	});
         
 	var suc={
@@ -67,10 +67,11 @@ app.post('/interoperability/api/admin/resetstations',(req,res) =>{
 		con.query(myquery, function (err, result, fields){
 			if (err) throw err;
 		});
+		//res.send(test);
 		let myquery1="INSERT INTO stations VALUES?";
 		let values = [];
 		for (let i=0; i<test.length; i++){
-			values.push([test[i].id, test[i].title, test[i].author, test[i].price])
+			values.push([test[i].stationID, test[i].station_name])
 		}
 		con.query(myquery1, [values], (err, result) =>{
 			if (err) res.send(fail);
@@ -84,8 +85,8 @@ app.post('/interoperability/api/admin/resetvehicles',(req,res) =>{
 	var con = mysql.createConnection({
 		host: "localhost",
 		user: "root",
-		password: "",
-		database:"db_softeng_2131"
+		password: "panoplos",
+		database:"softeng2131"
 	});
         
 	var suc={
@@ -102,10 +103,11 @@ app.post('/interoperability/api/admin/resetvehicles',(req,res) =>{
 		con.query(myquery, function (err, result, fields){
 			if (err) throw err;
 		});
+		//res.send(test);
 		let myquery1="INSERT INTO vehicles VALUES?";
 		let values = [];
 		for (let i=0; i<test.length; i++){
-			values.push([test[i].id, test[i].title, test[i].author, test[i].price])
+			values.push([test[i].vehicleID, test[i].license_year])
 		}
 		con.query(myquery1, [values], (err, result) =>{
 			if (err) res.send(fail);

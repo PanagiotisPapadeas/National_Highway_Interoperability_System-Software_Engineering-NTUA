@@ -12,8 +12,8 @@ function getchargesbyData(req,res){
 	var con = mysql.createConnection({
 		host: "localhost",
 		user: "root",
-		password: "",
-		database:"db_softeng_2131"
+		password: "panoplos",
+		database:"softeng2131"
 	});
 
 	var test = { 
@@ -42,5 +42,5 @@ function getchargesbyData(req,res){
 	});
 }
 
-router.get('/ChargesBy/:op_ID/:date_from/:date_to',getchargesbyData);
+router.get('/interoperability/api/ChargesBy/:op_ID/:date_from/:date_to',getchargesbyData);
 module.exports = router;

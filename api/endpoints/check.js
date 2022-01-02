@@ -6,8 +6,8 @@ function health(req,res){
 	var con = mysql.createConnection({
 		host: "localhost",
 		user: "root",
-		password: "",
-		database: "db_softeng_2131"
+		password: "panoplos",
+		database: "softeng2131"
 	});
 
 	con.connect(function(err) {
@@ -19,5 +19,5 @@ function health(req,res){
 	});
 }
 
-router.get('/admin/healthcheck',health);
+router.get('/interoperability/api/admin/healthcheck',health);
 module.exports = router;

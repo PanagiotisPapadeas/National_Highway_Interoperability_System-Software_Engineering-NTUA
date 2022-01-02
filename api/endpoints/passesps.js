@@ -12,8 +12,8 @@ function getpassespsData(req,res){
 	var con = mysql.createConnection({
 		host: "localhost",
 		user: "root",
-		password: "",
-		database:"db_softeng_2131"
+		password: "panoplos",
+		database:"softeng2131"
 	});
 
 	var test = { 
@@ -28,12 +28,17 @@ function getpassespsData(req,res){
 	con.connect(function(err) {
 		if (err) throw err;
 		console.log("Connected!");
-	let myquery2="SELECT station_name as Sta FROM station where station_name ="+"'"+req.params.stationID+"'";
-		con.query(myquery1, function (err, resul, fields){
+	let myquery2 ="SELECT station_name as St FROM stations where stationID ="+"'"+req.params.stationID+"'";
+		con.query(myquery2, function (err, resul, fields){
 			if (err) throw err;
-			test.StationOperator = resul[0]["Sta"];
+			test.StationOperator = resul[0]["St"];
 		});
-	let myquery1="SELECT count(*) as Num FROM passes, tags WHERE passes.tagID = tags.tagID and stationID ="+"'"+req.params.stationID+"'"+" and timestamp >="+"'"+req.params.date_from+"'"+" and timestamp <="+"'"+req.params.date_to+"'";
+		
+	//test.RequestTimestamp = dateTime;
+	//test.PeriodFrom = req.params.date_from;
+	//test.PeriodTo = req.params.date_to;
+        
+	let myquery1 ="SELECT count(*) as Num FROM passes, tags WHERE passes.tagID = tags.tagID and stationID ="+"'"+req.params.stationID+"'"+" and timestamp >="+"'"+req.params.date_from+"'"+" and timestamp <="+"'"+req.params.date_to+"'";
 		con.query(myquery1, function (err, resu, fields){
 			if (err) throw err;
 			test.NumberOfPasses = resu[0]["Num"];
@@ -52,5 +57,5 @@ function getpassespsData(req,res){
 	});
 }
 
-router.get('/PassesPerStation/:stationID/:date_from/:date_to',getpassespsData);
+router.get('/interoperability/api/PassesPerStation/:stationID/:date_from/:date_to',getpassespsData);
 module.exports = router;

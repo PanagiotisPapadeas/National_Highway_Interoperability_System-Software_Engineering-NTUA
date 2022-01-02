@@ -12,8 +12,8 @@ function getpassesaData(req,res){
 	var con = mysql.createConnection({
 		host: "localhost",
 		user: "root",
-		password: "",
-		database:"db_softeng_2131"
+		password: "panoplos",
+		database:"softeng2131"
 	});
 
 	var test = { 
@@ -30,12 +30,12 @@ function getpassesaData(req,res){
 	con.connect(function(err) {
 		if (err) throw err;
 		console.log("Connected!");
-	let myquery1="SELECT count(*) as Num FROM passes WHERE pass_type = 'visitor' and operatorID1="+"'"+req.params.op1_ID+"'"+" and operatorID2="+"'"+req.params.op2_ID+"'"+" and timestamp >="+"'"+req.params.date_from+"'"+" and timestamp <="+"'"+req.params.date_to+"'";	
+	let myquery1="SELECT count(*) as Num FROM passes WHERE pass_type = 'home' and operatorID1="+"'"+req.params.op1_ID+"'"+" and operatorID2="+"'"+req.params.op2_ID+"'"+" and timestamp >="+"'"+req.params.date_from+"'"+" and timestamp <="+"'"+req.params.date_to+"'";	
 		con.query(myquery1, function (err, resu, fields){
 			if (err) throw err;
 			test.NumberOfPasses = resu[0]["Num"];
 		});
-		let myquery="SELECT passID, stationID, timestamp, vehicleID, charge FROM passes WHERE pass_type = 'visitor' and operatorID1="+"'"+req.params.op1_ID+"'"+" and operatorID2="+"'"+req.params.op2_ID+"'"+" and timestamp >="+"'"+req.params.date_from+"'"+" and timestamp <="+"'"+req.params.date_to+"'";
+		let myquery="SELECT passID, stationID, timestamp, vehicleID, amount FROM passes WHERE pass_type = 'home' and operatorID1="+"'"+req.params.op1_ID+"'"+" and operatorID2="+"'"+req.params.op2_ID+"'"+" and timestamp >="+"'"+req.params.date_from+"'"+" and timestamp <="+"'"+req.params.date_to+"'";
 		con.query(myquery, function (err, result, fields){
 			if (err) throw err;
 			test.PassesList = result;
@@ -49,5 +49,5 @@ function getpassesaData(req,res){
 	});
 }
 
-router.get('/PassesAnalysis/:op1_ID/:op2_ID/:date_from/:date_to',getpassesaData);
+router.get('/interoperability/api/PassesAnalysis/:op1_ID/:op2_ID/:date_from/:date_to',getpassesaData);
 module.exports = router;
