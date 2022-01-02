@@ -1,0 +1,229 @@
+{
+	"info": {
+		"_postman_id": "2c5b9808-d74e-4019-85d8-e45feaab8296",
+		"name": "softeng2131",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Base URL",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9103/interoperability/api",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9103",
+					"path": [
+						"interoperability",
+						"api"
+					]
+				},
+				"description": "Main URL for our application which explains every URL request"
+			},
+			"response": []
+		},
+		{
+			"name": "Healthcheck Copy",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null,
+				"description": "Check database connectivity"
+			},
+			"response": []
+		},
+		{
+			"name": "resetpasses",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9103/interoperability/api/admin/resetpasses",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9103",
+					"path": [
+						"interoperability",
+						"api",
+						"admin",
+						"resetpasses"
+					]
+				},
+				"description": "Delete values from passes"
+			},
+			"response": []
+		},
+		{
+			"name": "resetstations",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\r\n\"stationID\":\"AO07\",\r\n\"station_name\":\"aodos\"\r\n},\r\n{\r\n\"stationID\":\"KO01\",\r\n\"station_name\":\"kentr\"\r\n}]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9103/interoperability/api/admin/resetstations",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9103",
+					"path": [
+						"interoperability",
+						"api",
+						"admin",
+						"resetstations"
+					]
+				},
+				"description": "Add values to stations"
+			},
+			"response": []
+		},
+		{
+			"name": "resetvehicles",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\r\n\"vehicleID\":\"AT\",\r\n\"license_year\":\"2004\"\r\n},\r\n{\r\n\"vehicleID\":\"DP\",\r\n\"license_year\":\"2008\"\r\n}]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9103/interoperability/api/admin/resetvehicles",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9103",
+					"path": [
+						"interoperability",
+						"api",
+						"admin",
+						"resetvehicles"
+					]
+				},
+				"description": "Add values to vehicles"
+			},
+			"response": []
+		},
+		{
+			"name": "PassesPerStation",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9103/interoperability/api/PassesPerStation/AO07/2019-01-01 01:00:00/2019-01-01 06:00:00",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9103",
+					"path": [
+						"interoperability",
+						"api",
+						"PassesPerStation",
+						"AO07",
+						"2019-01-01 01:00:00",
+						"2019-01-01 06:00:00"
+					]
+				},
+				"description": "Returns all data of passes for a given station ID and between given dates"
+			},
+			"response": []
+		},
+		{
+			"name": "PassesAnalysis",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9103/interoperability/api/PassesAnalysis/olympia_odos/kentriki_odos/2019-01-01 01:40:00/2019-01-01 5:25:00",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9103",
+					"path": [
+						"interoperability",
+						"api",
+						"PassesAnalysis",
+						"olympia_odos",
+						"kentriki_odos",
+						"2019-01-01 01:40:00",
+						"2019-01-01 5:25:00"
+					]
+				},
+				"description": "Returns all data of passes for op2 from stations that belong to op1 in given dates"
+			},
+			"response": []
+		},
+		{
+			"name": "PassesCost",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9103/interoperability/api/PassesCost/olympia_odos/kentriki_odos/2019-01-01 01:40:00/2019-01-01 05:25:00",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9103",
+					"path": [
+						"interoperability",
+						"api",
+						"PassesCost",
+						"olympia_odos",
+						"kentriki_odos",
+						"2019-01-01 01:40:00",
+						"2019-01-01 05:25:00"
+					]
+				},
+				"description": "Returns some data of passes total debt of given operator 2 to operator 1"
+			},
+			"response": []
+		},
+		{
+			"name": "ChargesBy",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9103/interoperability/api/ChargesBy/olympia_odos/2019-01-01 01:40:00/2019-01-01 05:25:00",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9103",
+					"path": [
+						"interoperability",
+						"api",
+						"ChargesBy",
+						"olympia_odos",
+						"2019-01-01 01:40:00",
+						"2019-01-01 05:25:00"
+					]
+				},
+				"description": "Returns all data of passes that belong to stations of given operator 1 for given dates"
+			},
+			"response": []
+		}
+	]
+}
