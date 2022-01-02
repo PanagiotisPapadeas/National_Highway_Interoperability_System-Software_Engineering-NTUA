@@ -1,0 +1,43 @@
+<P2>Supported Endpoints</P2>
+<br>
+
+1) <a href="https://localhost:9103/interoperability/api/admin/healthcheck" target="_blank">https://localhost:9103/interoperability/api/admin/healthcheck</a>
+<br> Description: Checks connectivity with database
+<br> Parameters : None
+<br>
+
+2) <a href="https://localhost:9103/interoperability/api/admin/resetpasses" target="_blank">https://localhost:9103/interoperability/api/admin/resetpasses</a>
+<br> Description: Delete Passes
+<br> Parameters : None
+<br>
+
+3) <a href="https://localhost:9103/interoperability/api/admin/resetstations" target="_blank">https://localhost:9103/interoperability/api/admin/resetstations</a>
+<br> Description: Initialise Stations with given data
+<br> Parameters : Given data
+<br>
+
+4) <a href="https://localhost:9103/interoperability/api/admin/resetvehicles" target="_blank">https://localhost:9103/interoperability/api/admin/resetvehicles</a>
+<br> Description: Initialise Vehicles with given data
+<br> Parameters : Given data
+<br>
+
+5) <a href="https://localhost:9103/interoperability/api/PassesPerStation/:stationID/:date_from/:date_to" target="_blank">https://localhost:9103/interoperability/api/PassesPerStation/:stationID/:date_from/:date_to</a>
+<br> Description: Returns all data from Passes from specified station and between specified dates
+<br> Parameters : station ID + date from + date to
+<br>
+
+6) <a href="https://localhost:9103/interoperability/api/PassesAnalysis/:op1_ID/:op2_ID/:date_from/:date_to" target="_blank">https://localhost:9103/interoperability/api/PassesAnalysis/:op1_ID/:op2_ID/:date_from/:date_to</a>
+<br> Description: Returns all data from passes for op2_ID from stations that belong to op1_ID in given dates
+<br> Parameters : op1_ID + op2_ID + date from + date to
+<br>
+
+7) <a href="https://localhost:9103/interoperability/api/PassesCost/:op1_ID/:op2_ID/:date_from/date_to" target="_blank">https://localhost:9103/interoperability/api/PassesCost/:op1_ID/:op2_ID/:date_from/:date_to</a>
+<br> Description: Returns all data from Passes without passes list and total debt of op2 to op1
+<br> Parameters : op1_ID + op2_ID + date_from + date_to
+<br>
+
+8) <a href="https://localhost:9103/interoperability/api/ChargesBy/:op_ID/:date_from/:date_to" target="_blank">https://localhost:9103/interoperability/api/ChargesBy/:op_ID/:date_from/:date_to</a>
+<br> Description: Returns all data from Passes that belong to stations of given operator 1 for given dates
+<br> Parameters : op_ID + date_from + date_to
+<br>
+
