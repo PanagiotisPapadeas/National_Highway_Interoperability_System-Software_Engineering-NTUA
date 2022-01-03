@@ -31,7 +31,12 @@ function getpassespsData(req,res){
 	let myquery2 ="SELECT station_name as St FROM stations where stationID ="+"'"+req.params.stationID+"'";
 		con.query(myquery2, function (err, resul, fields){
 			if (err) throw err;
-			test.StationOperator = resul[0]["St"];
+			try{
+				test.StationOperator = resul[0]["St"];
+			}
+			catch(err) {
+				test.StationOperator = "Not Registered";
+			}
 		});
 		
 	//test.RequestTimestamp = dateTime;
