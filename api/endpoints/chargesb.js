@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-//const converter = require('json-2-csv');
+const converter = require('json-2-csv');
 var mysql = require('mysql');
 var today = new Date();
 var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
@@ -28,6 +28,7 @@ function getchargesbyData(req,res){
 	con.connect(function(err) {
 		if (err) throw err;
 		console.log("Connected!");
+		//query to get charges by data given opID and dates
 		let myquery="SELECT operatorID2, count(*) as NumberOfPasses, sum(amount) as PassesCost FROM passes WHERE operatorID1="+"'"+req.params.op_ID+"'"+" and timestamp >="+"'"+req.params.date_from+"'"+" and timestamp <="+"'"+req.params.date_to+"'"+" group by operatorID2";
 		con.query(myquery, function (err, result, fields){
 			if (err) throw err;

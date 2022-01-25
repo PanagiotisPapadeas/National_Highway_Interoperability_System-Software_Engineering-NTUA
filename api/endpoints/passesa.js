@@ -7,7 +7,7 @@ var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
 var time = today.getHours()+":"+today.getMinutes()+":"+today.getSeconds();
 var dateTime = date+' '+time;
 
-
+//GET methof for passes analysis
 function getpassesaData(req,res){
 	var con = mysql.createConnection({
 		host: "localhost",
@@ -30,11 +30,13 @@ function getpassesaData(req,res){
 	con.connect(function(err) {
 		if (err) throw err;
 		console.log("Connected!");
+		//query to get number of results
 	let myquery1="SELECT count(*) as Num FROM passes WHERE pass_type = 'home' and operatorID1="+"'"+req.params.op1_ID+"'"+" and operatorID2="+"'"+req.params.op2_ID+"'"+" and timestamp >="+"'"+req.params.date_from+"'"+" and timestamp <="+"'"+req.params.date_to+"'";	
 		con.query(myquery1, function (err, resu, fields){
 			if (err) throw err;
 			test.NumberOfPasses = resu[0]["Num"];
 		});
+		//query to get analysis data given op1ID, op2ID and dates
 		let myquery="SELECT passID, stationID, timestamp, vehicleID, amount FROM passes WHERE pass_type = 'home' and operatorID1="+"'"+req.params.op1_ID+"'"+" and operatorID2="+"'"+req.params.op2_ID+"'"+" and timestamp >="+"'"+req.params.date_from+"'"+" and timestamp <="+"'"+req.params.date_to+"'";
 		con.query(myquery, function (err, result, fields){
 			if (err) throw err;

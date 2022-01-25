@@ -12,10 +12,12 @@ app.listen(port, () => {
 	console.log(`Example app listening on port ${port}!`);
 });
 
-//get example
+//GET path
 app.get('/interoperability/api/',(req,res) =>{
 	res.sendFile(path.join(__dirname + '/index.html'));
 });
+
+//POST delete passes
 app.post('/interoperability/api/admin/resetpasses',(req,res) =>{
         var mysql = require('mysql');
 
@@ -35,6 +37,7 @@ app.post('/interoperability/api/admin/resetpasses',(req,res) =>{
 	con.connect(function(err) {
 		if (err) throw err;
 		console.log("Connected!");
+		//query to delete values
 		let myquery="DELETE FROM passes";
 		con.query(myquery, function (err, result, fields){
 			if (err) res.send(fail);
@@ -43,6 +46,8 @@ app.post('/interoperability/api/admin/resetpasses',(req,res) =>{
 	});
 
 });
+
+//POST reset stations
 app.post('/interoperability/api/admin/resetstations',(req,res) =>{
         var mysql = require('mysql');
 
@@ -63,11 +68,13 @@ app.post('/interoperability/api/admin/resetstations',(req,res) =>{
 	con.connect(function(err) {
 		if (err) throw err;
 		console.log("Connected!");
+		//query to delete values
 		let myquery="DELETE FROM stations";
 		con.query(myquery, function (err, result, fields){
 			if (err) throw err;
 		});
 		//res.send(test);
+		//query to insert new values into stations
 		let myquery1="INSERT INTO stations VALUES?";
 		let values = [];
 		for (let i=0; i<test.length; i++){
@@ -79,6 +86,8 @@ app.post('/interoperability/api/admin/resetstations',(req,res) =>{
 	});
 	});
 });
+
+//POST reset vehicles
 app.post('/interoperability/api/admin/resetvehicles',(req,res) =>{
         var mysql = require('mysql');
 
@@ -99,11 +108,13 @@ app.post('/interoperability/api/admin/resetvehicles',(req,res) =>{
 	con.connect(function(err) {
 		if (err) throw err;
 		console.log("Connected!");
+		//query to delete values
 		let myquery="DELETE FROM vehicles";
 		con.query(myquery, function (err, result, fields){
 			if (err) throw err;
 		});
 		//res.send(test);
+		//query to insert new values into vehicles
 		let myquery1="INSERT INTO vehicles VALUES?";
 		let values = [];
 		for (let i=0; i<test.length; i++){
@@ -117,7 +128,7 @@ app.post('/interoperability/api/admin/resetvehicles',(req,res) =>{
 });
 
 
-
+//paths for endpoints
 const health=require("./endpoints/check.js");
 const passesperstation=require("./endpoints/passesps.js");
 const passesanalysis=require("./endpoints/passesa.js");

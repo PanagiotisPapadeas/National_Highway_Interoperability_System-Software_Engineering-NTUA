@@ -7,7 +7,7 @@ var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
 var time = today.getHours()+":"+today.getMinutes()+":"+today.getSeconds();
 var dateTime = date+' '+time;
 
-
+//GET method for passes per station
 function getpassespsData(req,res){
 	var con = mysql.createConnection({
 		host: "localhost",
@@ -28,6 +28,7 @@ function getpassespsData(req,res){
 	con.connect(function(err) {
 		if (err) throw err;
 		console.log("Connected!");
+		//query for station operator
 	let myquery2 ="SELECT station_name as St FROM stations where stationID ="+"'"+req.params.stationID+"'";
 		con.query(myquery2, function (err, resul, fields){
 			if (err) throw err;
@@ -42,12 +43,14 @@ function getpassespsData(req,res){
 	//test.RequestTimestamp = dateTime;
 	//test.PeriodFrom = req.params.date_from;
 	//test.PeriodTo = req.params.date_to;
-        
+                 
+		//query to get number of results
 	let myquery1 ="SELECT count(*) as Num FROM passes, tags WHERE passes.tagID = tags.tagID and stationID ="+"'"+req.params.stationID+"'"+" and timestamp >="+"'"+req.params.date_from+"'"+" and timestamp <="+"'"+req.params.date_to+"'";
 		con.query(myquery1, function (err, resu, fields){
 			if (err) throw err;
 			test.NumberOfPasses = resu[0]["Num"];
 		});
+		//query for passes per station data given stationID and dates
 		let myquery="SELECT passID, stationID, timestamp, vehicleID, tag_provider, pass_type, amount FROM passes, tags WHERE passes.tagID = tags.tagID and stationID ="+"'"+req.params.stationID+"'"+" and timestamp >="+"'"+req.params.date_from+"'"+" and timestamp <="+"'"+req.params.date_to+"'";
 		con.query(myquery, function (err, result, fields){
 			if (err) throw err;
