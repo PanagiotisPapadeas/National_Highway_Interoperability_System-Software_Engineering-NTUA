@@ -27,11 +27,37 @@
 			"response": []
 		},
 		{
-			"name": "Healthcheck Copy",
+			"name": "Healthcheck",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": null,
+				"url": {
+					"raw": "http://localhost:9103/interoperability/api/admin/healthcheck",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9103",
+					"path": [
+						"interoperability",
+						"api",
+						"admin",
+						"healthcheck"
+					]
+				},
 				"description": "Check database connectivity"
 			},
 			"response": []
@@ -66,7 +92,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "[{\r\n\"stationID\":\"AO07\",\r\n\"station_name\":\"aodos\"\r\n},\r\n{\r\n\"stationID\":\"KO01\",\r\n\"station_name\":\"kentr\"\r\n}]",
+					"raw": "[\r\n {\r\n   \"stationID\": \"AO00\",\r\n   \"station_name\": \"aodos tolls station 00\"\r\n },\r\n {\r\n   \"stationID\": \"AO01\",\r\n   \"station_name\": \"aodos tolls station 01\"\r\n },\r\n {\r\n   \"stationID\": \"AO02\",\r\n   \"station_name\": \"aodos tolls station 02\"\r\n },\r\n {\r\n   \"stationID\": \"AO03\",\r\n   \"station_name\": \"aodos tolls station 03\"\r\n },\r\n {\r\n   \"stationID\": \"AO04\",\r\n   \"station_name\": \"aodos tolls station 04\"\r\n },\r\n {\r\n   \"stationID\": \"AO05\",\r\n   \"station_name\": \"aodos tolls station 05\"\r\n },\r\n {\r\n   \"stationID\": \"AO06\",\r\n   \"station_name\": \"aodos tolls station 06\"\r\n },\r\n {\r\n   \"stationID\": \"AO07\",\r\n   \"station_name\": \"aodos tolls station 07\"\r\n },\r\n {\r\n   \"stationID\": \"AO08\",\r\n   \"station_name\": \"aodos tolls station 08\"\r\n },\r\n {\r\n   \"stationID\": \"AO09\",\r\n   \"station_name\": \"aodos tolls station 09\"\r\n },\r\n {\r\n   \"stationID\": \"AO10\",\r\n   \"station_name\": \"aodos tolls station 10\"\r\n },\r\n {\r\n   \"stationID\": \"AO11\",\r\n   \"station_name\": \"aodos tolls station 11\"\r\n },\r\n {\r\n   \"stationID\": \"AO12\",\r\n   \"station_name\": \"aodos tolls station 12\"\r\n },\r\n {\r\n   \"stationID\": \"AO13\",\r\n   \"station_name\": \"aodos tolls station 13\"\r\n },\r\n {\r\n   \"stationID\": \"AO14\",\r\n   \"station_name\": \"aodos tolls station 14\"\r\n },\r\n {\r\n   \"stationID\": \"AO15\",\r\n   \"station_name\": \"aodos tolls station 15\"\r\n },\r\n {\r\n   \"stationID\": \"AO16\",\r\n   \"station_name\": \"aodos tolls station 16\"\r\n },\r\n {\r\n   \"stationID\": \"AO17\",\r\n   \"station_name\": \"aodos tolls station 17\"\r\n },\r\n {\r\n   \"stationID\": \"AO18\",\r\n   \"station_name\": \"aodos tolls station 18\"\r\n },\r\n {\r\n   \"stationID\": \"AO19\",\r\n   \"station_name\": \"aodos tolls station 19\"\r\n },\r\n {\r\n   \"stationID\": \"GF00\",\r\n   \"station_name\": \"gefyra tolls station 00\"\r\n },\r\n {\r\n   \"stationID\": \"EG00\",\r\n   \"station_name\": \"egnatia tolls station 00\"\r\n },\r\n {\r\n   \"stationID\": \"EG01\",\r\n   \"station_name\": \"egnatia tolls station 01\"\r\n },\r\n {\r\n   \"stationID\": \"EG02\",\r\n   \"station_name\": \"egnatia tolls station 02\"\r\n },\r\n {\r\n   \"stationID\": \"EG03\",\r\n   \"station_name\": \"egnatia tolls station 03\"\r\n },\r\n {\r\n   \"stationID\": \"EG04\",\r\n   \"station_name\": \"egnatia tolls station 04\"\r\n },\r\n {\r\n   \"stationID\": \"EG05\",\r\n   \"station_name\": \"egnatia tolls station 05\"\r\n },\r\n {\r\n   \"stationID\": \"EG06\",\r\n   \"station_name\": \"egnatia tolls station 06\"\r\n },\r\n {\r\n   \"stationID\": \"EG07\",\r\n   \"station_name\": \"egnatia tolls station 07\"\r\n },\r\n {\r\n   \"stationID\": \"EG08\",\r\n   \"station_name\": \"egnatia tolls station 08\"\r\n },\r\n {\r\n   \"stationID\": \"EG09\",\r\n   \"station_name\": \"egnatia tolls station 09\"\r\n },\r\n {\r\n   \"stationID\": \"EG10\",\r\n   \"station_name\": \"egnatia tolls station 10\"\r\n },\r\n {\r\n   \"stationID\": \"EG11\",\r\n   \"station_name\": \"egnatia tolls station 11\"\r\n },\r\n {\r\n   \"stationID\": \"EG12\",\r\n   \"station_name\": \"egnatia tolls station 12\"\r\n },\r\n {\r\n   \"stationID\": \"KO00\",\r\n   \"station_name\": \"kentriki_odos tolls station 00\"\r\n },\r\n {\r\n   \"stationID\": \"KO01\",\r\n   \"station_name\": \"kentriki_odos tolls station 01\"\r\n },\r\n {\r\n   \"stationID\": \"KO02\",\r\n   \"station_name\": \"kentriki_odos tolls station 02\"\r\n },\r\n {\r\n   \"stationID\": \"KO03\",\r\n   \"station_name\": \"kentriki_odos tolls station 03\"\r\n },\r\n {\r\n   \"stationID\": \"KO04\",\r\n   \"station_name\": \"kentriki_odos tolls station 04\"\r\n },\r\n {\r\n   \"stationID\": \"KO05\",\r\n   \"station_name\": \"kentriki_odos tolls station 05\"\r\n },\r\n {\r\n   \"stationID\": \"KO06\",\r\n   \"station_name\": \"kentriki_odos tolls station 06\"\r\n },\r\n {\r\n   \"stationID\": \"KO07\",\r\n   \"station_name\": \"kentriki_odos tolls station 07\"\r\n },\r\n {\r\n   \"stationID\": \"KO08\",\r\n   \"station_name\": \"kentriki_odos tolls station 08\"\r\n },\r\n {\r\n   \"stationID\": \"KO09\",\r\n   \"station_name\": \"kentriki_odos tolls station 09\"\r\n },\r\n {\r\n   \"stationID\": \"MR00\",\r\n   \"station_name\": \"moreas tolls station 00\"\r\n },\r\n {\r\n   \"stationID\": \"MR01\",\r\n   \"station_name\": \"moreas tolls station 01\"\r\n },\r\n {\r\n   \"stationID\": \"MR02\",\r\n   \"station_name\": \"moreas tolls station 02\"\r\n },\r\n {\r\n   \"stationID\": \"MR03\",\r\n   \"station_name\": \"moreas tolls station 03\"\r\n },\r\n {\r\n   \"stationID\": \"MR04\",\r\n   \"station_name\": \"moreas tolls station 04\"\r\n },\r\n {\r\n   \"stationID\": \"MR05\",\r\n   \"station_name\": \"moreas tolls station 05\"\r\n },\r\n {\r\n   \"stationID\": \"MR06\",\r\n   \"station_name\": \"moreas tolls station 06\"\r\n },\r\n {\r\n   \"stationID\": \"MR07\",\r\n   \"station_name\": \"moreas tolls station 07\"\r\n },\r\n {\r\n   \"stationID\": \"MR08\",\r\n   \"station_name\": \"moreas tolls station 08\"\r\n },\r\n {\r\n   \"stationID\": \"NE00\",\r\n   \"station_name\": \"nea_odos tolls station 00\"\r\n },\r\n {\r\n   \"stationID\": \"NE01\",\r\n   \"station_name\": \"nea_odos tolls station 01\"\r\n },\r\n {\r\n   \"stationID\": \"NE02\",\r\n   \"station_name\": \"nea_odos tolls station 02\"\r\n },\r\n {\r\n   \"stationID\": \"NE03\",\r\n   \"station_name\": \"nea_odos tolls station 03\"\r\n },\r\n {\r\n   \"stationID\": \"NE04\",\r\n   \"station_name\": \"nea_odos tolls station 04\"\r\n },\r\n {\r\n   \"stationID\": \"NE05\",\r\n   \"station_name\": \"nea_odos tolls station 05\"\r\n },\r\n {\r\n   \"stationID\": \"NE06\",\r\n   \"station_name\": \"nea_odos tolls station 06\"\r\n },\r\n {\r\n   \"stationID\": \"NE07\",\r\n   \"station_name\": \"nea_odos tolls station 07\"\r\n },\r\n {\r\n   \"stationID\": \"NE08\",\r\n   \"station_name\": \"nea_odos tolls station 08\"\r\n },\r\n {\r\n   \"stationID\": \"NE09\",\r\n   \"station_name\": \"nea_odos tolls station 09\"\r\n },\r\n {\r\n   \"stationID\": \"NE10\",\r\n   \"station_name\": \"nea_odos tolls station 10\"\r\n },\r\n {\r\n   \"stationID\": \"NE11\",\r\n   \"station_name\": \"nea_odos tolls station 11\"\r\n },\r\n {\r\n   \"stationID\": \"NE12\",\r\n   \"station_name\": \"nea_odos tolls station 12\"\r\n },\r\n {\r\n   \"stationID\": \"NE13\",\r\n   \"station_name\": \"nea_odos tolls station 13\"\r\n },\r\n {\r\n   \"stationID\": \"NE14\",\r\n   \"station_name\": \"nea_odos tolls station 14\"\r\n },\r\n {\r\n   \"stationID\": \"NE15\",\r\n   \"station_name\": \"nea_odos tolls station 15\"\r\n },\r\n {\r\n   \"stationID\": \"NE16\",\r\n   \"station_name\": \"nea_odos tolls station 16\"\r\n },\r\n {\r\n   \"stationID\": \"OO00\",\r\n   \"station_name\": \"olympia_odos tolls station 00\"\r\n },\r\n {\r\n   \"stationID\": \"OO01\",\r\n   \"station_name\": \"olympia_odos tolls station 01\"\r\n },\r\n {\r\n   \"stationID\": \"OO02\",\r\n   \"station_name\": \"olympia_odos tolls station 02\"\r\n },\r\n {\r\n   \"stationID\": \"OO03\",\r\n   \"station_name\": \"olympia_odos tolls station 03\"\r\n },\r\n {\r\n   \"stationID\": \"OO04\",\r\n   \"station_name\": \"olympia_odos tolls station 04\"\r\n },\r\n {\r\n   \"stationID\": \"OO05\",\r\n   \"station_name\": \"olympia_odos tolls station 05\"\r\n },\r\n {\r\n   \"stationID\": \"OO06\",\r\n   \"station_name\": \"olympia_odos tolls station 06\"\r\n },\r\n {\r\n   \"stationID\": \"OO07\",\r\n   \"station_name\": \"olympia_odos tolls station 07\"\r\n },\r\n {\r\n   \"stationID\": \"OO08\",\r\n   \"station_name\": \"olympia_odos tolls station 08\"\r\n },\r\n {\r\n   \"stationID\": \"OO09\",\r\n   \"station_name\": \"olympia_odos tolls station 09\"\r\n },\r\n {\r\n   \"stationID\": \"OO10\",\r\n   \"station_name\": \"olympia_odos tolls station 10\"\r\n },\r\n {\r\n   \"stationID\": \"OO11\",\r\n   \"station_name\": \"olympia_odos tolls station 11\"\r\n },\r\n {\r\n   \"stationID\": \"OO12\",\r\n   \"station_name\": \"olympia_odos tolls station 12\"\r\n },\r\n {\r\n   \"stationID\": \"OO13\",\r\n   \"station_name\": \"olympia_odos tolls station 13\"\r\n }\r\n]",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -98,7 +124,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "[{\r\n\"vehicleID\":\"AT\",\r\n\"license_year\":\"2004\"\r\n},\r\n{\r\n\"vehicleID\":\"DP\",\r\n\"license_year\":\"2008\"\r\n}]",
+					"raw": "[\r\n {\r\n   \"vehicleID\": \"RV87TIY76692\",\r\n   \"license_year\": 2001\r\n },\r\n {\r\n   \"vehicleID\": \"RR73DWB65452\",\r\n   \"license_year\": 2017\r\n },\r\n {\r\n   \"vehicleID\": \"KW50MJG67260\",\r\n   \"license_year\": 2016\r\n },\r\n {\r\n   \"vehicleID\": \"QW79CHL42244\",\r\n   \"license_year\": 2006\r\n },\r\n {\r\n   \"vehicleID\": \"DO24BCW15511\",\r\n   \"license_year\": 2009\r\n },\r\n {\r\n   \"vehicleID\": \"PD45WOT56494\",\r\n   \"license_year\": 2010\r\n },\r\n {\r\n   \"vehicleID\": \"BM25PHF40639\",\r\n   \"license_year\": 2018\r\n },\r\n {\r\n   \"vehicleID\": \"XV40HUQ04740\",\r\n   \"license_year\": 2001\r\n },\r\n {\r\n   \"vehicleID\": \"VX68BAR38623\",\r\n   \"license_year\": 2005\r\n },\r\n {\r\n   \"vehicleID\": \"EN26OAB52983\",\r\n   \"license_year\": 2002\r\n },\r\n {\r\n   \"vehicleID\": \"MQ65WJJ60020\",\r\n   \"license_year\": 2009\r\n },\r\n {\r\n   \"vehicleID\": \"OC94ASJ72024\",\r\n   \"license_year\": 2002\r\n },\r\n {\r\n   \"vehicleID\": \"ED51EWW52190\",\r\n   \"license_year\": 2017\r\n },\r\n {\r\n   \"vehicleID\": \"VL67TFO75321\",\r\n   \"license_year\": 2007\r\n },\r\n {\r\n   \"vehicleID\": \"HT62RDI04611\",\r\n   \"license_year\": 2000\r\n },\r\n {\r\n   \"vehicleID\": \"IZ65WAT29135\",\r\n   \"license_year\": 2002\r\n },\r\n {\r\n   \"vehicleID\": \"WG11QVY31890\",\r\n   \"license_year\": 2006\r\n },\r\n {\r\n   \"vehicleID\": \"QN23UHH39091\",\r\n   \"license_year\": 2014\r\n },\r\n {\r\n   \"vehicleID\": \"NY14GZR94632\",\r\n   \"license_year\": 2011\r\n },\r\n {\r\n   \"vehicleID\": \"SU00RDZ36214\",\r\n   \"license_year\": 2014\r\n },\r\n {\r\n   \"vehicleID\": \"LM86GYO69819\",\r\n   \"license_year\": 2010\r\n },\r\n {\r\n   \"vehicleID\": \"AY38OQF67603\",\r\n   \"license_year\": 2020\r\n },\r\n {\r\n   \"vehicleID\": \"QH15HWX24570\",\r\n   \"license_year\": 2009\r\n },\r\n {\r\n   \"vehicleID\": \"NO82BAX82566\",\r\n   \"license_year\": 2000\r\n },\r\n {\r\n   \"vehicleID\": \"BY85QGR11636\",\r\n   \"license_year\": 2018\r\n },\r\n {\r\n   \"vehicleID\": \"MA30QLI76818\",\r\n   \"license_year\": 2019\r\n },\r\n {\r\n   \"vehicleID\": \"XF28DGK65250\",\r\n   \"license_year\": 2021\r\n },\r\n {\r\n   \"vehicleID\": \"KF48RSD79865\",\r\n   \"license_year\": 2012\r\n },\r\n {\r\n   \"vehicleID\": \"TZ48CCW54765\",\r\n   \"license_year\": 2015\r\n },\r\n {\r\n   \"vehicleID\": \"YL27IFD65117\",\r\n   \"license_year\": 2006\r\n },\r\n {\r\n   \"vehicleID\": \"EC02LZC49528\",\r\n   \"license_year\": 2001\r\n },\r\n {\r\n   \"vehicleID\": \"EV77EDV52985\",\r\n   \"license_year\": 2001\r\n },\r\n {\r\n   \"vehicleID\": \"IW53OQE31439\",\r\n   \"license_year\": 2014\r\n },\r\n {\r\n   \"vehicleID\": \"QN12NTR81378\",\r\n   \"license_year\": 2003\r\n },\r\n {\r\n   \"vehicleID\": \"RK48BOP88344\",\r\n   \"license_year\": 2016\r\n },\r\n {\r\n   \"vehicleID\": \"EE22TMX10817\",\r\n   \"license_year\": 2001\r\n },\r\n {\r\n   \"vehicleID\": \"SY96JDQ97089\",\r\n   \"license_year\": 2004\r\n },\r\n {\r\n   \"vehicleID\": \"HA82SCK64299\",\r\n   \"license_year\": 2001\r\n },\r\n {\r\n   \"vehicleID\": \"BZ76ROL87339\",\r\n   \"license_year\": 2017\r\n },\r\n {\r\n   \"vehicleID\": \"EZ65FLV39493\",\r\n   \"license_year\": 2012\r\n },\r\n {\r\n   \"vehicleID\": \"MP14WFM40909\",\r\n   \"license_year\": 2008\r\n },\r\n {\r\n   \"vehicleID\": \"CP56DAO45598\",\r\n   \"license_year\": 2017\r\n },\r\n {\r\n   \"vehicleID\": \"LG64ARC91224\",\r\n   \"license_year\": 2019\r\n },\r\n {\r\n   \"vehicleID\": \"NZ35XLQ89678\",\r\n   \"license_year\": 2015\r\n },\r\n {\r\n   \"vehicleID\": \"AT19HLV57173\",\r\n   \"license_year\": 2004\r\n },\r\n {\r\n   \"vehicleID\": \"QP02SYE47964\",\r\n   \"license_year\": 2010\r\n },\r\n {\r\n   \"vehicleID\": \"HR53SRO94328\",\r\n   \"license_year\": 2004\r\n },\r\n {\r\n   \"vehicleID\": \"PF04UCA93312\",\r\n   \"license_year\": 2007\r\n },\r\n {\r\n   \"vehicleID\": \"TE24LCO18661\",\r\n   \"license_year\": 2009\r\n },\r\n {\r\n   \"vehicleID\": \"QO68DIC93032\",\r\n   \"license_year\": 2016\r\n },\r\n {\r\n   \"vehicleID\": \"RR98KQE80731\",\r\n   \"license_year\": 2020\r\n },\r\n {\r\n   \"vehicleID\": \"UF84JOS00561\",\r\n   \"license_year\": 2020\r\n },\r\n {\r\n   \"vehicleID\": \"XV91YMP27722\",\r\n   \"license_year\": 2012\r\n },\r\n {\r\n   \"vehicleID\": \"HE38BQH01623\",\r\n   \"license_year\": 2016\r\n },\r\n {\r\n   \"vehicleID\": \"QO77TFN61853\",\r\n   \"license_year\": 2004\r\n },\r\n {\r\n   \"vehicleID\": \"JO50FSF60755\",\r\n   \"license_year\": 2011\r\n },\r\n {\r\n   \"vehicleID\": \"VJ92OYV94295\",\r\n   \"license_year\": 2000\r\n },\r\n {\r\n   \"vehicleID\": \"DW44ZOO26361\",\r\n   \"license_year\": 2009\r\n },\r\n {\r\n   \"vehicleID\": \"CR31GMR97972\",\r\n   \"license_year\": 2000\r\n },\r\n {\r\n   \"vehicleID\": \"XE59BZM26378\",\r\n   \"license_year\": 2020\r\n },\r\n {\r\n   \"vehicleID\": \"PM58XHX45588\",\r\n   \"license_year\": 2006\r\n },\r\n {\r\n   \"vehicleID\": \"FL13UMN92207\",\r\n   \"license_year\": 2006\r\n },\r\n {\r\n   \"vehicleID\": \"UA13YTK28483\",\r\n   \"license_year\": 2020\r\n },\r\n {\r\n   \"vehicleID\": \"EG95RTB75032\",\r\n   \"license_year\": 2013\r\n },\r\n {\r\n   \"vehicleID\": \"SL09NOT64494\",\r\n   \"license_year\": 2005\r\n },\r\n {\r\n   \"vehicleID\": \"IO09FGE68100\",\r\n   \"license_year\": 2015\r\n },\r\n {\r\n   \"vehicleID\": \"OY94SZK34436\",\r\n   \"license_year\": 2007\r\n },\r\n {\r\n   \"vehicleID\": \"BK77KNV91142\",\r\n   \"license_year\": 2007\r\n },\r\n {\r\n   \"vehicleID\": \"ZY93PCY41868\",\r\n   \"license_year\": 2006\r\n },\r\n {\r\n   \"vehicleID\": \"MX39VOS38645\",\r\n   \"license_year\": 2018\r\n },\r\n {\r\n   \"vehicleID\": \"JV67MTI17124\",\r\n   \"license_year\": 2000\r\n },\r\n {\r\n   \"vehicleID\": \"MU06LHX94338\",\r\n   \"license_year\": 2016\r\n },\r\n {\r\n   \"vehicleID\": \"FY47TUN40300\",\r\n   \"license_year\": 2002\r\n },\r\n {\r\n   \"vehicleID\": \"UP28MBM38391\",\r\n   \"license_year\": 2010\r\n },\r\n {\r\n   \"vehicleID\": \"YH66OKD41942\",\r\n   \"license_year\": 2019\r\n },\r\n {\r\n   \"vehicleID\": \"QX75YWC61835\",\r\n   \"license_year\": 2019\r\n },\r\n {\r\n   \"vehicleID\": \"IX01MVL33676\",\r\n   \"license_year\": 2001\r\n },\r\n {\r\n   \"vehicleID\": \"WU78BMX13511\",\r\n   \"license_year\": 2008\r\n },\r\n {\r\n   \"vehicleID\": \"WY00MLL63827\",\r\n   \"license_year\": 2000\r\n },\r\n {\r\n   \"vehicleID\": \"IN99SEN20660\",\r\n   \"license_year\": 2014\r\n },\r\n {\r\n   \"vehicleID\": \"EM54HQI58682\",\r\n   \"license_year\": 2008\r\n },\r\n {\r\n   \"vehicleID\": \"CK97FAU13897\",\r\n   \"license_year\": 2007\r\n },\r\n {\r\n   \"vehicleID\": \"JD78PQD35395\",\r\n   \"license_year\": 2002\r\n },\r\n {\r\n   \"vehicleID\": \"UO75YNW62238\",\r\n   \"license_year\": 2003\r\n },\r\n {\r\n   \"vehicleID\": \"IC95TLY24827\",\r\n   \"license_year\": 2020\r\n },\r\n {\r\n   \"vehicleID\": \"IA29IQS63679\",\r\n   \"license_year\": 2010\r\n },\r\n {\r\n   \"vehicleID\": \"QR03XCJ37459\",\r\n   \"license_year\": 2014\r\n },\r\n {\r\n   \"vehicleID\": \"QU94IGC75528\",\r\n   \"license_year\": 2003\r\n },\r\n {\r\n   \"vehicleID\": \"JF94VYA88954\",\r\n   \"license_year\": 2000\r\n },\r\n {\r\n   \"vehicleID\": \"JE65QJK64802\",\r\n   \"license_year\": 2002\r\n },\r\n {\r\n   \"vehicleID\": \"YX66XYW62640\",\r\n   \"license_year\": 2014\r\n },\r\n {\r\n   \"vehicleID\": \"BI87HYL81972\",\r\n   \"license_year\": 2020\r\n },\r\n {\r\n   \"vehicleID\": \"HW75BKT77773\",\r\n   \"license_year\": 2016\r\n },\r\n {\r\n   \"vehicleID\": \"KB55KTM48860\",\r\n   \"license_year\": 2009\r\n },\r\n {\r\n   \"vehicleID\": \"LC72NRN52084\",\r\n   \"license_year\": 2001\r\n },\r\n {\r\n   \"vehicleID\": \"DV04FQL29609\",\r\n   \"license_year\": 2010\r\n },\r\n {\r\n   \"vehicleID\": \"CM15YCB60994\",\r\n   \"license_year\": 2005\r\n },\r\n {\r\n   \"vehicleID\": \"DP11ENT03275\",\r\n   \"license_year\": 2008\r\n },\r\n {\r\n   \"vehicleID\": \"TV81MAQ99005\",\r\n   \"license_year\": 2000\r\n },\r\n {\r\n   \"vehicleID\": \"PE73VJU23485\",\r\n   \"license_year\": 2010\r\n }\r\n]",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -125,6 +151,19 @@
 		},
 		{
 			"name": "PassesPerStation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 402\", function () {\r",
+							"    pm.response.to.have.status(402);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -150,6 +189,19 @@
 		},
 		{
 			"name": "PassesAnalysis",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 402\", function () {\r",
+							"    pm.response.to.have.status(402);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -176,6 +228,19 @@
 		},
 		{
 			"name": "PassesCost",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 402\", function () {\r",
+							"    pm.response.to.have.status(402);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
