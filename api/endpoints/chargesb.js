@@ -7,7 +7,7 @@ var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
 var time = today.getHours()+":"+today.getMinutes()+":"+today.getSeconds();
 var dateTime = date+' '+time;
 
-
+//GET method for charges by
 function getchargesbyData(req,res){
 	var con = mysql.createConnection({
 		host: "localhost",
@@ -15,7 +15,8 @@ function getchargesbyData(req,res){
 		password: "panoplos",
 		database:"softeng2131"
 	});
-
+        
+	//JSON object to return
 	var test = { 
 
 	};

@@ -15,7 +15,8 @@ function getpassespsData(req,res){
 		password: "panoplos",
 		database:"softeng2131"
 	});
-
+        
+	//JSON object to return
 	var test = { 
 
 	};
@@ -24,6 +25,7 @@ function getpassespsData(req,res){
 	test.PeriodFrom = req.params.date_from;
 	test.PeriodTo = req.params.date_to;
         var l = req.query.format;
+	var code;
 
 	con.connect(function(err) {
 		if (err) throw err;
@@ -39,18 +41,17 @@ function getpassespsData(req,res){
 				test.StationOperator = "Not Registered";
 			}
 		});
-		
-	//test.RequestTimestamp = dateTime;
-	//test.PeriodFrom = req.params.date_from;
-	//test.PeriodTo = req.params.date_to;
+	
                  
 		//query to get number of results
 	let myquery1 ="SELECT count(*) as Num FROM passes, tags WHERE passes.tagID = tags.tagID and stationID ="+"'"+req.params.stationID+"'"+" and timestamp >="+"'"+req.params.date_from+"'"+" and timestamp <="+"'"+req.params.date_to+"'";
 		con.query(myquery1, function (err, resu, fields){
 			if (err) throw err;
 			test.NumberOfPasses = resu[0]["Num"];
+			//check number to return suitable code
+			if (resu[0]["Num"] == 0) code = 402;
 		});
-		//query for passes per station data given stationID and dates
+		//query for passes per station given stationID and dates
 		let myquery="SELECT passID, stationID, timestamp, vehicleID, tag_provider, pass_type, amount FROM passes, tags WHERE passes.tagID = tags.tagID and stationID ="+"'"+req.params.stationID+"'"+" and timestamp >="+"'"+req.params.date_from+"'"+" and timestamp <="+"'"+req.params.date_to+"'";
 		con.query(myquery, function (err, result, fields){
 			if (err) throw err;
@@ -60,7 +61,9 @@ function getpassespsData(req,res){
 				if (err) throw err;
 			        res.send(csv);
 			});}
-			else {res.send(test);}
+			else {
+				if (code == 402) res.status(402).send(test);
+				else res.send(test);}
 		});
 	});
 }

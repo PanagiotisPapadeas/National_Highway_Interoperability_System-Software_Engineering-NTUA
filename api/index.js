@@ -128,7 +128,7 @@ app.post('/interoperability/api/admin/resetvehicles',(req,res) =>{
 });
 
 
-//paths for endpoints
+//path for endpoints scripts
 const health=require("./endpoints/check.js");
 const passesperstation=require("./endpoints/passesps.js");
 const passesanalysis=require("./endpoints/passesa.js");

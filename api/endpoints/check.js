@@ -2,14 +2,17 @@ const express = require('express');
 const router = express.Router();
 var mysql = require('mysql');
 
+//GET method to check connectivity
 function health(req,res){
+	//connect to database
 	var con = mysql.createConnection({
 		host: "localhost",
 		user: "root",
 		password: "panoplos",
 		database: "softeng2131"
 	});
-
+         
+	//check if connection was successful
 	con.connect(function(err) {
 		if (err) res.status(400).send("Not Connected");
 		else {

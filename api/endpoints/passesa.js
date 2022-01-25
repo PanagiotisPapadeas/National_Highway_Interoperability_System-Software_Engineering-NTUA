@@ -16,6 +16,7 @@ function getpassesaData(req,res){
 		database:"softeng2131"
 	});
 
+        //JSON object to return
 	var test = { 
 
 	};
@@ -25,7 +26,7 @@ function getpassesaData(req,res){
 	test.PeriodFrom = req.params.date_from;
 	test.PeriodTo = req.params.date_to;
 	var l = req.query.format;
-
+        var code;
 
 	con.connect(function(err) {
 		if (err) throw err;
@@ -35,6 +36,8 @@ function getpassesaData(req,res){
 		con.query(myquery1, function (err, resu, fields){
 			if (err) throw err;
 			test.NumberOfPasses = resu[0]["Num"];
+			//check number to return suitable code
+			if (resu[0]["Num"] == 0) code = 402;
 		});
 		//query to get analysis data given op1ID, op2ID and dates
 		let myquery="SELECT passID, stationID, timestamp, vehicleID, amount FROM passes WHERE pass_type = 'home' and operatorID1="+"'"+req.params.op1_ID+"'"+" and operatorID2="+"'"+req.params.op2_ID+"'"+" and timestamp >="+"'"+req.params.date_from+"'"+" and timestamp <="+"'"+req.params.date_to+"'";
@@ -46,7 +49,10 @@ function getpassesaData(req,res){
 				if (err) throw err;
 			        res.send(csv);
 			});}
-			else {res.send(test);}
+			else {	
+			if (code == 402) res.status(402).send(test);
+				else res.send(test);
+			}
 		});
 	});
 }

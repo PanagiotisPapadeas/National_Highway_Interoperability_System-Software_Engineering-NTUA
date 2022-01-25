@@ -16,6 +16,7 @@ function getpassescData(req,res){
 		database:"softeng2131"
 	});
 
+	//JSON object to return
 	var test = { 
 
 	};
@@ -25,6 +26,7 @@ function getpassescData(req,res){
 	test.PeriodFrom = req.params.date_from;
 	test.PeriodTo = req.params.date_to;
         var l = req.query.format;
+        var code;
 
 	con.connect(function(err) {
 		if (err) throw err;
@@ -34,13 +36,17 @@ function getpassescData(req,res){
 		con.query(myquery, function (err, result, fields){
 			if (err) throw err;
 			test.NumberOfPasses = result[0]["Num"];
+			//check number to return suitable code
+			if (result[0]["Num"]==0) code = 402;
 			test.PassesCost = result[0]["PassesC"];
 			if (l=="csv"){
 			converter.json2csv(test, function(err, csv){a
 				if (err) throw err;
 			        res.send(csv);
 			});}
-			else {res.send(test);}
+			else {
+                                if (code==402) res.status(402).send(test);
+				else res.send(test);}
 		});
 	});
 }
