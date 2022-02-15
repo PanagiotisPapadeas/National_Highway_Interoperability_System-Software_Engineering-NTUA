@@ -12,7 +12,7 @@ app.listen(port, () => {
 	console.log(`Example app listening on port ${port}!`);
 });
 
-//GET path
+//GET base URL path
 app.get('/interoperability/api/',(req,res) =>{
 	res.sendFile(path.join(__dirname + '/index.html'));
 });
@@ -44,7 +44,6 @@ app.post('/interoperability/api/admin/resetpasses',(req,res) =>{
 			else res.send(suc);
 		});
 	});
-
 });
 
 //POST reset stations
@@ -130,12 +129,14 @@ app.post('/interoperability/api/admin/resetvehicles',(req,res) =>{
 
 //path for endpoints scripts
 const health=require("./endpoints/check.js");
+const badhealth=require("./endpoints/badcheck.js");
 const passesperstation=require("./endpoints/passesps.js");
 const passesanalysis=require("./endpoints/passesa.js");
 const passescost=require("./endpoints/passesc.js");
 const chargesby=require("./endpoints/chargesb.js");
 
 app.use('/',health);
+app.use('/',badhealth);
 app.use('/',passesperstation);
 app.use('/',passesanalysis);
 app.use('/',passescost);
