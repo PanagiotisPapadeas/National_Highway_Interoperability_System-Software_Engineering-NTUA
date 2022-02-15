@@ -1,6 +1,4 @@
 import argparse
-import csv
-import importlib
 import json
 import mysql.connector
 import os
@@ -22,7 +20,7 @@ except mysql.connector.Error as e:
     print(e)
 cursor = connection.cursor()
 
-parser = argparse.ArgumentParser(description='CLI program')
+parser = argparse.ArgumentParser(description='CLI program for')
 
 parser.add_argument("scope", type=str, help="The action to perform")
 
@@ -37,11 +35,10 @@ if args.scope == "healthcheck":
     json.dump(json_object, f, ensure_ascii=False)
 elif args.scope == "resetpasses":
     f = open("resetpasses.json", "w")
-    try:
-        cursor.execute("DELETE FROM passes")
-        connection.commit()
+    ret = reset.resetpasses()
+    if ret == 0:
         json_object = {"status": "OK"}
-    except mysql.connector.Error as e:
+    else:
         json_object = {"status": "failed"}
     json.dump(json_object, f, ensure_ascii=False)
 elif args.scope == "resetstations":
@@ -53,9 +50,17 @@ elif args.scope == "resetstations":
         json_object = {"status": "failed"}
     json.dump(json_object, f)
 elif args.scope == "resetvehicles":
-    cursor.execute("DELETE FROM vehicles")
-    #TODO add vehicles
-    #TODO add json
+    f = open("resetvehicles.json", "w")
+    ret = reset.resetvehicles()
+    if ret == 0:
+        json_object = {"status": "OK"}
+    else:
+        json_object = {"status": "failed"}
+    json.dump(json_object, f)
+elif args.scope == "passesperstation":
+    parser.add_argument("--station", help="Specify station to get data for")
+    parser.add_argument("--from", help="Specify date to start the search")
+    parser.add_argument("--to", help="Specify date to end the search")
 elif args.scope == "admin":
     parser.add_argument("--passesupd", help="Upload passes from a .csv file", action="store_true")
     parser.add_argument("--source", help="Specifiy the .csv file")

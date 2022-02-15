@@ -1,6 +1,41 @@
 import pandas
 import mysql.connector
 
+def resetpasses():
+    try:
+        connection =  mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="challenge",
+            database="softeng2131"
+        )
+    except mysql.connector.Error as e:
+        print(e)
+    cursor = connection.cursor()
+
+    try:
+        cursor.execute("DELETE FROM passes")
+        add_pass = ("INSERT INTO passes "
+                    "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)")
+
+        data = pandas.read_csv("passes.csv", engine="python")
+
+        for row in data.itertuples(index=False):
+            pass_entity = (getattr(row, "passID"), getattr(row, "stationID"),
+                getattr(row, "tagID"), getattr(row, "amount"), getattr(row, "timestamp"),
+                getattr(row, "vehicleID"), getattr(row, "operatorID1"), getattr(row, "operatorID2"),
+                getattr(row, "stationID"))
+            cursor.execute(add_pass, pass_entity)
+        ret = 0
+    except mysql.connector.Error as err:
+        print(err)
+        ret = -1
+    connection.commit()
+    cursor.close()
+    connection.close()
+    return ret
+
+
 def resetstations():
     try:
         connection =  mysql.connector.connect(
@@ -54,14 +89,15 @@ def resetvehicles():
 
     try:
         cursor.execute("DELETE FROM vehicles")
+        cursor.execute("DELETE from tags")
+        add_vehicle = ("INSERT INTO vehicles "
+                    "VALUES (%s, %s)")
+
         data = pandas.read_csv("vehicles.csv", engine="python")
         for row in data.itertuples(index=False):
-            vehicleID = getattr(row, "vehicleID")
-            tagID = getattr(row, "tagID")
-            tagProvider = getattr(row, "tagProvider")
-            providerAbbr = getattr(row, "providerAbbr")
-            licenseYear = getattr(row, "licenseYear")
-
+            vehicle_entity = (getattr(row, "vehicleID"), getattr(row, "license_year"))
+            cursor.execute(add_vehicle, vehicle_entity)
+        ret = 0
     except mysql.connector.Error as err:
         print(err)
         ret = -1
