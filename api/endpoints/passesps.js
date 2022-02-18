@@ -2,10 +2,6 @@ const express = require('express');
 const router = express.Router();
 const converter = require('json-2-csv');
 var mysql = require('mysql');
-var today = new Date();
-var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-var time = today.getHours()+":"+today.getMinutes()+":"+today.getSeconds();
-var dateTime = date+' '+time;
 
 //GET method for passes per station
 function getpassespsData(req,res){
@@ -21,7 +17,6 @@ function getpassespsData(req,res){
 
 	};
 	test.Station = req.params.stationID;
-	test.RequestTimestamp = dateTime;
 	test.PeriodFrom = req.params.date_from;
 	test.PeriodTo = req.params.date_to;
         var l = req.query.format;
@@ -34,6 +29,14 @@ function getpassespsData(req,res){
 	let myquery2 ="SELECT station_name as St FROM stations where stationID ="+"'"+req.params.stationID+"'";
 		con.query(myquery2, function (err, resul, fields){
 			if (err) throw err;
+
+			//get request timestamp
+	                var today = new Date();
+			var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+			var time = today.getHours()+":"+today.getMinutes()+":"+today.getSeconds();
+			var dateTime = date+' '+time;
+			test.RequestTimestamp = dateTime;
+
 			try{
 				test.StationOperator = resul[0]["St"];
 			}
@@ -52,7 +55,7 @@ function getpassespsData(req,res){
 			if (resu[0]["Num"] == 0) code = 402;
 		});
 		//query for passes per station given stationID and dates
-		let myquery="SELECT passID, stationID, timestamp, vehicleID, tag_provider, pass_type, amount FROM passes, tags WHERE passes.tagID = tags.tagID and stationID ="+"'"+req.params.stationID+"'"+" and timestamp >="+"'"+req.params.date_from+"'"+" and timestamp <="+"'"+req.params.date_to+"'";
+		let myquery="SELECT passID, stationID, timestamp as PassTimestamp, vehicleID, tag_provider as TagProvider, pass_type as PassType, amount as PassCharge FROM passes, tags WHERE passes.tagID = tags.tagID and stationID ="+"'"+req.params.stationID+"'"+" and timestamp >="+"'"+req.params.date_from+"'"+" and timestamp <="+"'"+req.params.date_to+"'";
 		con.query(myquery, function (err, result, fields){
 			if (err) throw err;
 			test.PassesList = result;

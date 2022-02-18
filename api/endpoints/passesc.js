@@ -2,10 +2,6 @@ const express = require('express');
 const router = express.Router();
 const converter = require('json-2-csv');
 var mysql = require('mysql');
-var today = new Date();
-var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-var time = today.getHours()+":"+today.getMinutes()+":"+today.getSeconds();
-var dateTime = date+' '+time;
 
 //GET method for passes cost
 function getpassescData(req,res){
@@ -22,7 +18,6 @@ function getpassescData(req,res){
 	};
 	test.op1_ID = req.params.op1_ID;
 	test.op2_ID = req.params.op2_ID;
-	test.RequestTimestamp = dateTime;
 	test.PeriodFrom = req.params.date_from;
 	test.PeriodTo = req.params.date_to;
         var l = req.query.format;
@@ -35,6 +30,13 @@ function getpassescData(req,res){
 		let myquery="SELECT count(*) as Num, sum(amount) as PassesC from passes where operatorID1="+"'"+req.params.op1_ID+"'"+" and operatorID2="+"'"+req.params.op2_ID+"'"+" and timestamp >="+"'"+req.params.date_from+"'"+" and timestamp <="+"'"+req.params.date_to+"'";
 		con.query(myquery, function (err, result, fields){
 			if (err) throw err;
+
+			//get request timestamp
+	                var today = new Date();
+			var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+			var time = today.getHours()+":"+today.getMinutes()+":"+today.getSeconds();
+			var dateTime = date+' '+time;
+			test.RequestTimestamp = dateTime;
 			test.NumberOfPasses = result[0]["Num"];
 			//check number to return suitable code
 			if (result[0]["Num"]==0) code = 402;
