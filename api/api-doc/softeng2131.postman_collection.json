@@ -134,7 +134,7 @@
 							"});\r",
 							"pm.test(\"FirstPassFromTheStationAmount is 3.1\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.PassesList[0].amount).to.eql(3.1);\r",
+							"    pm.expect(jsonData.PassesList[0].PassCharge).to.eql(3.1);\r",
 							"});"
 						],
 						"type": "text/javascript"
