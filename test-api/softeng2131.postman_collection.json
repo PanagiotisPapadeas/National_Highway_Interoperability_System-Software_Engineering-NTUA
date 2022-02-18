@@ -1,0 +1,620 @@
+{
+	"info": {
+		"_postman_id": "2c5b9808-d74e-4019-85d8-e45feaab8296",
+		"name": "softeng2131",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Base URL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9103/interoperability/api",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9103",
+					"path": [
+						"interoperability",
+						"api"
+					]
+				},
+				"description": "Main URL for our application which explains every URL request"
+			},
+			"response": []
+		},
+		{
+			"name": "Healthcheck",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9103/interoperability/api/admin/healthcheck",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9103",
+					"path": [
+						"interoperability",
+						"api",
+						"admin",
+						"healthcheck"
+					]
+				},
+				"description": "Check database connectivity"
+			},
+			"response": []
+		},
+		{
+			"name": "BadHealthcheck",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Wrong credentials, code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9103/interoperability/api/admin/badhealthcheck",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9103",
+					"path": [
+						"interoperability",
+						"api",
+						"admin",
+						"badhealthcheck"
+					]
+				},
+				"description": "Example of bad credentials for connection error"
+			},
+			"response": []
+		},
+		{
+			"name": "PassesPerStation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"pm.test(\"Station_ID is AO09\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.Station).to.eql(\"AO09\");\r",
+							"});\r",
+							"pm.test(\"NumOfPasses is 8\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.NumberOfPasses).to.eql(8);\r",
+							"});\r",
+							"pm.test(\"FirstPassFromTheStationAmount is 3.1\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.PassesList[0].amount).to.eql(3.1);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9103/interoperability/api/PassesPerStation/AO09/2020-01-01 00:00:00/2020-01-31 23:59:59",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9103",
+					"path": [
+						"interoperability",
+						"api",
+						"PassesPerStation",
+						"AO09",
+						"2020-01-01 00:00:00",
+						"2020-01-31 23:59:59"
+					]
+				},
+				"description": "Returns all data of passes for station ID AO09 for January of 2020"
+			},
+			"response": []
+		},
+		{
+			"name": "PassesPerStationNullValue",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 402 no value to return\", function () {\r",
+							"    pm.response.to.have.status(402);\r",
+							"});\r",
+							"pm.test(\"NumOfPasses is 0\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.NumberOfPasses).to.eql(0);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9103/interoperability/api/PassesPerStation/AO09/2010-01-01 00:00:00/2010-01-31 23:59:59",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9103",
+					"path": [
+						"interoperability",
+						"api",
+						"PassesPerStation",
+						"AO09",
+						"2010-01-01 00:00:00",
+						"2010-01-31 23:59:59"
+					]
+				},
+				"description": "PaaesPerStation example of null value return"
+			},
+			"response": []
+		},
+		{
+			"name": "PassesPerStationCSV",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9103/interoperability/api/PassesPerStation/AO09/2020-01-01 00:00:00/2020-01-31 23:59:59?format=csv",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9103",
+					"path": [
+						"interoperability",
+						"api",
+						"PassesPerStation",
+						"AO09",
+						"2020-01-01 00:00:00",
+						"2020-01-31 23:59:59"
+					],
+					"query": [
+						{
+							"key": "format",
+							"value": "csv"
+						}
+					]
+				},
+				"description": "PassesPerStation example to return csv format"
+			},
+			"response": []
+		},
+		{
+			"name": "PassesAnalysis",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"NumOfPasses is 5\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.NumberOfPasses).to.eql(5);\r",
+							"});\r",
+							"pm.test(\"Operator1_ID is kentriki_odos\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.op1_ID).to.eql(\"kentriki_odos\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9103/interoperability/api/PassesAnalysis/kentriki_odos/olympia_odos/2020-01-01 00:00:00/2020-01-31 23:59:59",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9103",
+					"path": [
+						"interoperability",
+						"api",
+						"PassesAnalysis",
+						"kentriki_odos",
+						"olympia_odos",
+						"2020-01-01 00:00:00",
+						"2020-01-31 23:59:59"
+					]
+				},
+				"description": "Returns all data of passes for drivers with epasses to olympia_odos from stations that belong to kentriki_odos for January of 2020"
+			},
+			"response": []
+		},
+		{
+			"name": "PassesCost",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"PassesCost KO->OO below 13.801\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.PassesCost).to.be.below(13.801);\r",
+							"});\r",
+							"pm.test(\"PassesCost KO->OO over 13.799\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.PassesCost).to.be.above(13.79);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9103/interoperability/api/PassesCost/olympia_odos/kentriki_odos/2020-10-01 00:00:00/2020-10--31 23:59:59",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9103",
+					"path": [
+						"interoperability",
+						"api",
+						"PassesCost",
+						"olympia_odos",
+						"kentriki_odos",
+						"2020-10-01 00:00:00",
+						"2020-10--31 23:59:59"
+					]
+				},
+				"description": "Returns some data of passes including total debt of kentriki odos to olympia odos for October of 2020"
+			},
+			"response": []
+		},
+		{
+			"name": "PassesCostReverse",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"PassesCost OO->KO below 8.851\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.PassesCost).to.be.below(8.851);\r",
+							"});\r",
+							"pm.test(\"PassesCost OO->KO over 8.849\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.PassesCost).to.be.above(8.849);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9103/interoperability/api/PassesCost/kentriki_odos/olympia_odos/2020-10-01 00:00:00/2020-10--31 23:59:59",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9103",
+					"path": [
+						"interoperability",
+						"api",
+						"PassesCost",
+						"kentriki_odos",
+						"olympia_odos",
+						"2020-10-01 00:00:00",
+						"2020-10--31 23:59:59"
+					]
+				},
+				"description": "Returns data of passes including total debt of olympia odos to kentriki odos for October of 2020"
+			},
+			"response": []
+		},
+		{
+			"name": "ChargesBy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"PassesCost from gefyra over 7.099\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.PPOList[1].PassesCost).to.be.above(7.099);\r",
+							"});\r",
+							"pm.test(\"PassesCost from gefyra below 7.101\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.PPOList[1].PassesCost).to.be.below(7.101);\r",
+							"});\r",
+							"pm.test(\"PassesCost from nea_odos to be 5.7\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.PPOList[2].PassesCost).to.eql(5.700000047683716);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9103/interoperability/api/ChargesBy/kentriki_odos/2020-10-01 00:00:00/2020-10-31 23:59:59",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9103",
+					"path": [
+						"interoperability",
+						"api",
+						"ChargesBy",
+						"kentriki_odos",
+						"2020-10-01 00:00:00",
+						"2020-10-31 23:59:59"
+					]
+				},
+				"description": "Returns data of passes that belong to stations of kentriki_odos including total debdt from all operators for October of 2020"
+			},
+			"response": []
+		},
+		{
+			"name": "ChargesByReverse",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"PassesCost from kentriki_odos to be 14.8\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.PPOList[4].PassesCost).to.eql(14.799999952316284);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9103/interoperability/api/ChargesBy/nea_odos/2020-10-01 00:00:00/2020-10-31 23:59:59",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9103",
+					"path": [
+						"interoperability",
+						"api",
+						"ChargesBy",
+						"nea_odos",
+						"2020-10-01 00:00:00",
+						"2020-10-31 23:59:59"
+					]
+				},
+				"description": "Returns data of passes that belong to stations of nea_odos including total debdt from all operators for October of 2020"
+			},
+			"response": []
+		},
+		{
+			"name": "resetstations",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST resetstations\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n {\r\n   \"stationID\": \"AO00\",\r\n   \"station_name\": \"aodos tolls station 00\"\r\n },\r\n {\r\n   \"stationID\": \"AO01\",\r\n   \"station_name\": \"aodos tolls station 01\"\r\n },\r\n {\r\n   \"stationID\": \"AO02\",\r\n   \"station_name\": \"aodos tolls station 02\"\r\n },\r\n {\r\n   \"stationID\": \"AO03\",\r\n   \"station_name\": \"aodos tolls station 03\"\r\n },\r\n {\r\n   \"stationID\": \"AO04\",\r\n   \"station_name\": \"aodos tolls station 04\"\r\n },\r\n {\r\n   \"stationID\": \"AO05\",\r\n   \"station_name\": \"aodos tolls station 05\"\r\n },\r\n {\r\n   \"stationID\": \"AO06\",\r\n   \"station_name\": \"aodos tolls station 06\"\r\n },\r\n {\r\n   \"stationID\": \"AO07\",\r\n   \"station_name\": \"aodos tolls station 07\"\r\n },\r\n {\r\n   \"stationID\": \"AO08\",\r\n   \"station_name\": \"aodos tolls station 08\"\r\n },\r\n {\r\n   \"stationID\": \"AO09\",\r\n   \"station_name\": \"aodos tolls station 09\"\r\n },\r\n {\r\n   \"stationID\": \"AO10\",\r\n   \"station_name\": \"aodos tolls station 10\"\r\n },\r\n {\r\n   \"stationID\": \"AO11\",\r\n   \"station_name\": \"aodos tolls station 11\"\r\n },\r\n {\r\n   \"stationID\": \"AO12\",\r\n   \"station_name\": \"aodos tolls station 12\"\r\n },\r\n {\r\n   \"stationID\": \"AO13\",\r\n   \"station_name\": \"aodos tolls station 13\"\r\n },\r\n {\r\n   \"stationID\": \"AO14\",\r\n   \"station_name\": \"aodos tolls station 14\"\r\n },\r\n {\r\n   \"stationID\": \"AO15\",\r\n   \"station_name\": \"aodos tolls station 15\"\r\n },\r\n {\r\n   \"stationID\": \"AO16\",\r\n   \"station_name\": \"aodos tolls station 16\"\r\n },\r\n {\r\n   \"stationID\": \"AO17\",\r\n   \"station_name\": \"aodos tolls station 17\"\r\n },\r\n {\r\n   \"stationID\": \"AO18\",\r\n   \"station_name\": \"aodos tolls station 18\"\r\n },\r\n {\r\n   \"stationID\": \"AO19\",\r\n   \"station_name\": \"aodos tolls station 19\"\r\n },\r\n {\r\n   \"stationID\": \"GF00\",\r\n   \"station_name\": \"gefyra tolls station 00\"\r\n },\r\n {\r\n   \"stationID\": \"EG00\",\r\n   \"station_name\": \"egnatia tolls station 00\"\r\n },\r\n {\r\n   \"stationID\": \"EG01\",\r\n   \"station_name\": \"egnatia tolls station 01\"\r\n },\r\n {\r\n   \"stationID\": \"EG02\",\r\n   \"station_name\": \"egnatia tolls station 02\"\r\n },\r\n {\r\n   \"stationID\": \"EG03\",\r\n   \"station_name\": \"egnatia tolls station 03\"\r\n },\r\n {\r\n   \"stationID\": \"EG04\",\r\n   \"station_name\": \"egnatia tolls station 04\"\r\n },\r\n {\r\n   \"stationID\": \"EG05\",\r\n   \"station_name\": \"egnatia tolls station 05\"\r\n },\r\n {\r\n   \"stationID\": \"EG06\",\r\n   \"station_name\": \"egnatia tolls station 06\"\r\n },\r\n {\r\n   \"stationID\": \"EG07\",\r\n   \"station_name\": \"egnatia tolls station 07\"\r\n },\r\n {\r\n   \"stationID\": \"EG08\",\r\n   \"station_name\": \"egnatia tolls station 08\"\r\n },\r\n {\r\n   \"stationID\": \"EG09\",\r\n   \"station_name\": \"egnatia tolls station 09\"\r\n },\r\n {\r\n   \"stationID\": \"EG10\",\r\n   \"station_name\": \"egnatia tolls station 10\"\r\n },\r\n {\r\n   \"stationID\": \"EG11\",\r\n   \"station_name\": \"egnatia tolls station 11\"\r\n },\r\n {\r\n   \"stationID\": \"EG12\",\r\n   \"station_name\": \"egnatia tolls station 12\"\r\n },\r\n {\r\n   \"stationID\": \"KO00\",\r\n   \"station_name\": \"kentriki_odos tolls station 00\"\r\n },\r\n {\r\n   \"stationID\": \"KO01\",\r\n   \"station_name\": \"kentriki_odos tolls station 01\"\r\n },\r\n {\r\n   \"stationID\": \"KO02\",\r\n   \"station_name\": \"kentriki_odos tolls station 02\"\r\n },\r\n {\r\n   \"stationID\": \"KO03\",\r\n   \"station_name\": \"kentriki_odos tolls station 03\"\r\n },\r\n {\r\n   \"stationID\": \"KO04\",\r\n   \"station_name\": \"kentriki_odos tolls station 04\"\r\n },\r\n {\r\n   \"stationID\": \"KO05\",\r\n   \"station_name\": \"kentriki_odos tolls station 05\"\r\n },\r\n {\r\n   \"stationID\": \"KO06\",\r\n   \"station_name\": \"kentriki_odos tolls station 06\"\r\n },\r\n {\r\n   \"stationID\": \"KO07\",\r\n   \"station_name\": \"kentriki_odos tolls station 07\"\r\n },\r\n {\r\n   \"stationID\": \"KO08\",\r\n   \"station_name\": \"kentriki_odos tolls station 08\"\r\n },\r\n {\r\n   \"stationID\": \"KO09\",\r\n   \"station_name\": \"kentriki_odos tolls station 09\"\r\n },\r\n {\r\n   \"stationID\": \"MR00\",\r\n   \"station_name\": \"moreas tolls station 00\"\r\n },\r\n {\r\n   \"stationID\": \"MR01\",\r\n   \"station_name\": \"moreas tolls station 01\"\r\n },\r\n {\r\n   \"stationID\": \"MR02\",\r\n   \"station_name\": \"moreas tolls station 02\"\r\n },\r\n {\r\n   \"stationID\": \"MR03\",\r\n   \"station_name\": \"moreas tolls station 03\"\r\n },\r\n {\r\n   \"stationID\": \"MR04\",\r\n   \"station_name\": \"moreas tolls station 04\"\r\n },\r\n {\r\n   \"stationID\": \"MR05\",\r\n   \"station_name\": \"moreas tolls station 05\"\r\n },\r\n {\r\n   \"stationID\": \"MR06\",\r\n   \"station_name\": \"moreas tolls station 06\"\r\n },\r\n {\r\n   \"stationID\": \"MR07\",\r\n   \"station_name\": \"moreas tolls station 07\"\r\n },\r\n {\r\n   \"stationID\": \"MR08\",\r\n   \"station_name\": \"moreas tolls station 08\"\r\n },\r\n {\r\n   \"stationID\": \"NE00\",\r\n   \"station_name\": \"nea_odos tolls station 00\"\r\n },\r\n {\r\n   \"stationID\": \"NE01\",\r\n   \"station_name\": \"nea_odos tolls station 01\"\r\n },\r\n {\r\n   \"stationID\": \"NE02\",\r\n   \"station_name\": \"nea_odos tolls station 02\"\r\n },\r\n {\r\n   \"stationID\": \"NE03\",\r\n   \"station_name\": \"nea_odos tolls station 03\"\r\n },\r\n {\r\n   \"stationID\": \"NE04\",\r\n   \"station_name\": \"nea_odos tolls station 04\"\r\n },\r\n {\r\n   \"stationID\": \"NE05\",\r\n   \"station_name\": \"nea_odos tolls station 05\"\r\n },\r\n {\r\n   \"stationID\": \"NE06\",\r\n   \"station_name\": \"nea_odos tolls station 06\"\r\n },\r\n {\r\n   \"stationID\": \"NE07\",\r\n   \"station_name\": \"nea_odos tolls station 07\"\r\n },\r\n {\r\n   \"stationID\": \"NE08\",\r\n   \"station_name\": \"nea_odos tolls station 08\"\r\n },\r\n {\r\n   \"stationID\": \"NE09\",\r\n   \"station_name\": \"nea_odos tolls station 09\"\r\n },\r\n {\r\n   \"stationID\": \"NE10\",\r\n   \"station_name\": \"nea_odos tolls station 10\"\r\n },\r\n {\r\n   \"stationID\": \"NE11\",\r\n   \"station_name\": \"nea_odos tolls station 11\"\r\n },\r\n {\r\n   \"stationID\": \"NE12\",\r\n   \"station_name\": \"nea_odos tolls station 12\"\r\n },\r\n {\r\n   \"stationID\": \"NE13\",\r\n   \"station_name\": \"nea_odos tolls station 13\"\r\n },\r\n {\r\n   \"stationID\": \"NE14\",\r\n   \"station_name\": \"nea_odos tolls station 14\"\r\n },\r\n {\r\n   \"stationID\": \"NE15\",\r\n   \"station_name\": \"nea_odos tolls station 15\"\r\n },\r\n {\r\n   \"stationID\": \"NE16\",\r\n   \"station_name\": \"nea_odos tolls station 16\"\r\n },\r\n {\r\n   \"stationID\": \"OO00\",\r\n   \"station_name\": \"olympia_odos tolls station 00\"\r\n },\r\n {\r\n   \"stationID\": \"OO01\",\r\n   \"station_name\": \"olympia_odos tolls station 01\"\r\n },\r\n {\r\n   \"stationID\": \"OO02\",\r\n   \"station_name\": \"olympia_odos tolls station 02\"\r\n },\r\n {\r\n   \"stationID\": \"OO03\",\r\n   \"station_name\": \"olympia_odos tolls station 03\"\r\n },\r\n {\r\n   \"stationID\": \"OO04\",\r\n   \"station_name\": \"olympia_odos tolls station 04\"\r\n },\r\n {\r\n   \"stationID\": \"OO05\",\r\n   \"station_name\": \"olympia_odos tolls station 05\"\r\n },\r\n {\r\n   \"stationID\": \"OO06\",\r\n   \"station_name\": \"olympia_odos tolls station 06\"\r\n },\r\n {\r\n   \"stationID\": \"OO07\",\r\n   \"station_name\": \"olympia_odos tolls station 07\"\r\n },\r\n {\r\n   \"stationID\": \"OO08\",\r\n   \"station_name\": \"olympia_odos tolls station 08\"\r\n },\r\n {\r\n   \"stationID\": \"OO09\",\r\n   \"station_name\": \"olympia_odos tolls station 09\"\r\n },\r\n {\r\n   \"stationID\": \"OO10\",\r\n   \"station_name\": \"olympia_odos tolls station 10\"\r\n },\r\n {\r\n   \"stationID\": \"OO11\",\r\n   \"station_name\": \"olympia_odos tolls station 11\"\r\n },\r\n {\r\n   \"stationID\": \"OO12\",\r\n   \"station_name\": \"olympia_odos tolls station 12\"\r\n },\r\n {\r\n   \"stationID\": \"OO13\",\r\n   \"station_name\": \"olympia_odos tolls station 13\"\r\n }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9103/interoperability/api/admin/resetstations",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9103",
+					"path": [
+						"interoperability",
+						"api",
+						"admin",
+						"resetstations"
+					]
+				},
+				"description": "Add data to stations"
+			},
+			"response": []
+		},
+		{
+			"name": "resetvehicles",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST resetvehicles\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n {\r\n   \"vehicleID\": \"RV87TIY76692\",\r\n   \"license_year\": 2001\r\n },\r\n {\r\n   \"vehicleID\": \"RR73DWB65452\",\r\n   \"license_year\": 2017\r\n },\r\n {\r\n   \"vehicleID\": \"KW50MJG67260\",\r\n   \"license_year\": 2016\r\n },\r\n {\r\n   \"vehicleID\": \"QW79CHL42244\",\r\n   \"license_year\": 2006\r\n },\r\n {\r\n   \"vehicleID\": \"DO24BCW15511\",\r\n   \"license_year\": 2009\r\n },\r\n {\r\n   \"vehicleID\": \"PD45WOT56494\",\r\n   \"license_year\": 2010\r\n },\r\n {\r\n   \"vehicleID\": \"BM25PHF40639\",\r\n   \"license_year\": 2018\r\n },\r\n {\r\n   \"vehicleID\": \"XV40HUQ04740\",\r\n   \"license_year\": 2001\r\n },\r\n {\r\n   \"vehicleID\": \"VX68BAR38623\",\r\n   \"license_year\": 2005\r\n },\r\n {\r\n   \"vehicleID\": \"EN26OAB52983\",\r\n   \"license_year\": 2002\r\n },\r\n {\r\n   \"vehicleID\": \"MQ65WJJ60020\",\r\n   \"license_year\": 2009\r\n },\r\n {\r\n   \"vehicleID\": \"OC94ASJ72024\",\r\n   \"license_year\": 2002\r\n },\r\n {\r\n   \"vehicleID\": \"ED51EWW52190\",\r\n   \"license_year\": 2017\r\n },\r\n {\r\n   \"vehicleID\": \"VL67TFO75321\",\r\n   \"license_year\": 2007\r\n },\r\n {\r\n   \"vehicleID\": \"HT62RDI04611\",\r\n   \"license_year\": 2000\r\n },\r\n {\r\n   \"vehicleID\": \"IZ65WAT29135\",\r\n   \"license_year\": 2002\r\n },\r\n {\r\n   \"vehicleID\": \"WG11QVY31890\",\r\n   \"license_year\": 2006\r\n },\r\n {\r\n   \"vehicleID\": \"QN23UHH39091\",\r\n   \"license_year\": 2014\r\n },\r\n {\r\n   \"vehicleID\": \"NY14GZR94632\",\r\n   \"license_year\": 2011\r\n },\r\n {\r\n   \"vehicleID\": \"SU00RDZ36214\",\r\n   \"license_year\": 2014\r\n },\r\n {\r\n   \"vehicleID\": \"LM86GYO69819\",\r\n   \"license_year\": 2010\r\n },\r\n {\r\n   \"vehicleID\": \"AY38OQF67603\",\r\n   \"license_year\": 2020\r\n },\r\n {\r\n   \"vehicleID\": \"QH15HWX24570\",\r\n   \"license_year\": 2009\r\n },\r\n {\r\n   \"vehicleID\": \"NO82BAX82566\",\r\n   \"license_year\": 2000\r\n },\r\n {\r\n   \"vehicleID\": \"BY85QGR11636\",\r\n   \"license_year\": 2018\r\n },\r\n {\r\n   \"vehicleID\": \"MA30QLI76818\",\r\n   \"license_year\": 2019\r\n },\r\n {\r\n   \"vehicleID\": \"XF28DGK65250\",\r\n   \"license_year\": 2021\r\n },\r\n {\r\n   \"vehicleID\": \"KF48RSD79865\",\r\n   \"license_year\": 2012\r\n },\r\n {\r\n   \"vehicleID\": \"TZ48CCW54765\",\r\n   \"license_year\": 2015\r\n },\r\n {\r\n   \"vehicleID\": \"YL27IFD65117\",\r\n   \"license_year\": 2006\r\n },\r\n {\r\n   \"vehicleID\": \"EC02LZC49528\",\r\n   \"license_year\": 2001\r\n },\r\n {\r\n   \"vehicleID\": \"EV77EDV52985\",\r\n   \"license_year\": 2001\r\n },\r\n {\r\n   \"vehicleID\": \"IW53OQE31439\",\r\n   \"license_year\": 2014\r\n },\r\n {\r\n   \"vehicleID\": \"QN12NTR81378\",\r\n   \"license_year\": 2003\r\n },\r\n {\r\n   \"vehicleID\": \"RK48BOP88344\",\r\n   \"license_year\": 2016\r\n },\r\n {\r\n   \"vehicleID\": \"EE22TMX10817\",\r\n   \"license_year\": 2001\r\n },\r\n {\r\n   \"vehicleID\": \"SY96JDQ97089\",\r\n   \"license_year\": 2004\r\n },\r\n {\r\n   \"vehicleID\": \"HA82SCK64299\",\r\n   \"license_year\": 2001\r\n },\r\n {\r\n   \"vehicleID\": \"BZ76ROL87339\",\r\n   \"license_year\": 2017\r\n },\r\n {\r\n   \"vehicleID\": \"EZ65FLV39493\",\r\n   \"license_year\": 2012\r\n },\r\n {\r\n   \"vehicleID\": \"MP14WFM40909\",\r\n   \"license_year\": 2008\r\n },\r\n {\r\n   \"vehicleID\": \"CP56DAO45598\",\r\n   \"license_year\": 2017\r\n },\r\n {\r\n   \"vehicleID\": \"LG64ARC91224\",\r\n   \"license_year\": 2019\r\n },\r\n {\r\n   \"vehicleID\": \"NZ35XLQ89678\",\r\n   \"license_year\": 2015\r\n },\r\n {\r\n   \"vehicleID\": \"AT19HLV57173\",\r\n   \"license_year\": 2004\r\n },\r\n {\r\n   \"vehicleID\": \"QP02SYE47964\",\r\n   \"license_year\": 2010\r\n },\r\n {\r\n   \"vehicleID\": \"HR53SRO94328\",\r\n   \"license_year\": 2004\r\n },\r\n {\r\n   \"vehicleID\": \"PF04UCA93312\",\r\n   \"license_year\": 2007\r\n },\r\n {\r\n   \"vehicleID\": \"TE24LCO18661\",\r\n   \"license_year\": 2009\r\n },\r\n {\r\n   \"vehicleID\": \"QO68DIC93032\",\r\n   \"license_year\": 2016\r\n },\r\n {\r\n   \"vehicleID\": \"RR98KQE80731\",\r\n   \"license_year\": 2020\r\n },\r\n {\r\n   \"vehicleID\": \"UF84JOS00561\",\r\n   \"license_year\": 2020\r\n },\r\n {\r\n   \"vehicleID\": \"XV91YMP27722\",\r\n   \"license_year\": 2012\r\n },\r\n {\r\n   \"vehicleID\": \"HE38BQH01623\",\r\n   \"license_year\": 2016\r\n },\r\n {\r\n   \"vehicleID\": \"QO77TFN61853\",\r\n   \"license_year\": 2004\r\n },\r\n {\r\n   \"vehicleID\": \"JO50FSF60755\",\r\n   \"license_year\": 2011\r\n },\r\n {\r\n   \"vehicleID\": \"VJ92OYV94295\",\r\n   \"license_year\": 2000\r\n },\r\n {\r\n   \"vehicleID\": \"DW44ZOO26361\",\r\n   \"license_year\": 2009\r\n },\r\n {\r\n   \"vehicleID\": \"CR31GMR97972\",\r\n   \"license_year\": 2000\r\n },\r\n {\r\n   \"vehicleID\": \"XE59BZM26378\",\r\n   \"license_year\": 2020\r\n },\r\n {\r\n   \"vehicleID\": \"PM58XHX45588\",\r\n   \"license_year\": 2006\r\n },\r\n {\r\n   \"vehicleID\": \"FL13UMN92207\",\r\n   \"license_year\": 2006\r\n },\r\n {\r\n   \"vehicleID\": \"UA13YTK28483\",\r\n   \"license_year\": 2020\r\n },\r\n {\r\n   \"vehicleID\": \"EG95RTB75032\",\r\n   \"license_year\": 2013\r\n },\r\n {\r\n   \"vehicleID\": \"SL09NOT64494\",\r\n   \"license_year\": 2005\r\n },\r\n {\r\n   \"vehicleID\": \"IO09FGE68100\",\r\n   \"license_year\": 2015\r\n },\r\n {\r\n   \"vehicleID\": \"OY94SZK34436\",\r\n   \"license_year\": 2007\r\n },\r\n {\r\n   \"vehicleID\": \"BK77KNV91142\",\r\n   \"license_year\": 2007\r\n },\r\n {\r\n   \"vehicleID\": \"ZY93PCY41868\",\r\n   \"license_year\": 2006\r\n },\r\n {\r\n   \"vehicleID\": \"MX39VOS38645\",\r\n   \"license_year\": 2018\r\n },\r\n {\r\n   \"vehicleID\": \"JV67MTI17124\",\r\n   \"license_year\": 2000\r\n },\r\n {\r\n   \"vehicleID\": \"MU06LHX94338\",\r\n   \"license_year\": 2016\r\n },\r\n {\r\n   \"vehicleID\": \"FY47TUN40300\",\r\n   \"license_year\": 2002\r\n },\r\n {\r\n   \"vehicleID\": \"UP28MBM38391\",\r\n   \"license_year\": 2010\r\n },\r\n {\r\n   \"vehicleID\": \"YH66OKD41942\",\r\n   \"license_year\": 2019\r\n },\r\n {\r\n   \"vehicleID\": \"QX75YWC61835\",\r\n   \"license_year\": 2019\r\n },\r\n {\r\n   \"vehicleID\": \"IX01MVL33676\",\r\n   \"license_year\": 2001\r\n },\r\n {\r\n   \"vehicleID\": \"WU78BMX13511\",\r\n   \"license_year\": 2008\r\n },\r\n {\r\n   \"vehicleID\": \"WY00MLL63827\",\r\n   \"license_year\": 2000\r\n },\r\n {\r\n   \"vehicleID\": \"IN99SEN20660\",\r\n   \"license_year\": 2014\r\n },\r\n {\r\n   \"vehicleID\": \"EM54HQI58682\",\r\n   \"license_year\": 2008\r\n },\r\n {\r\n   \"vehicleID\": \"CK97FAU13897\",\r\n   \"license_year\": 2007\r\n },\r\n {\r\n   \"vehicleID\": \"JD78PQD35395\",\r\n   \"license_year\": 2002\r\n },\r\n {\r\n   \"vehicleID\": \"UO75YNW62238\",\r\n   \"license_year\": 2003\r\n },\r\n {\r\n   \"vehicleID\": \"IC95TLY24827\",\r\n   \"license_year\": 2020\r\n },\r\n {\r\n   \"vehicleID\": \"IA29IQS63679\",\r\n   \"license_year\": 2010\r\n },\r\n {\r\n   \"vehicleID\": \"QR03XCJ37459\",\r\n   \"license_year\": 2014\r\n },\r\n {\r\n   \"vehicleID\": \"QU94IGC75528\",\r\n   \"license_year\": 2003\r\n },\r\n {\r\n   \"vehicleID\": \"JF94VYA88954\",\r\n   \"license_year\": 2000\r\n },\r\n {\r\n   \"vehicleID\": \"JE65QJK64802\",\r\n   \"license_year\": 2002\r\n },\r\n {\r\n   \"vehicleID\": \"YX66XYW62640\",\r\n   \"license_year\": 2014\r\n },\r\n {\r\n   \"vehicleID\": \"BI87HYL81972\",\r\n   \"license_year\": 2020\r\n },\r\n {\r\n   \"vehicleID\": \"HW75BKT77773\",\r\n   \"license_year\": 2016\r\n },\r\n {\r\n   \"vehicleID\": \"KB55KTM48860\",\r\n   \"license_year\": 2009\r\n },\r\n {\r\n   \"vehicleID\": \"LC72NRN52084\",\r\n   \"license_year\": 2001\r\n },\r\n {\r\n   \"vehicleID\": \"DV04FQL29609\",\r\n   \"license_year\": 2010\r\n },\r\n {\r\n   \"vehicleID\": \"CM15YCB60994\",\r\n   \"license_year\": 2005\r\n },\r\n {\r\n   \"vehicleID\": \"DP11ENT03275\",\r\n   \"license_year\": 2008\r\n },\r\n {\r\n   \"vehicleID\": \"TV81MAQ99005\",\r\n   \"license_year\": 2000\r\n },\r\n {\r\n   \"vehicleID\": \"PE73VJU23485\",\r\n   \"license_year\": 2010\r\n }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9103/interoperability/api/admin/resetvehicles",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9103",
+					"path": [
+						"interoperability",
+						"api",
+						"admin",
+						"resetvehicles"
+					]
+				},
+				"description": "Add data to vehicles"
+			},
+			"response": []
+		},
+		{
+			"name": "resetpasses",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST resetpasses\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9103/interoperability/api/admin/resetpasses",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9103",
+					"path": [
+						"interoperability",
+						"api",
+						"admin",
+						"resetpasses"
+					]
+				},
+				"description": "Delete data from passes"
+			},
+			"response": []
+		}
+	]
+}
