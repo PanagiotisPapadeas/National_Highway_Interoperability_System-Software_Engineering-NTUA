@@ -7,6 +7,19 @@
 	"item": [
 		{
 			"name": "Base URL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -63,12 +76,25 @@
 			"response": []
 		},
 		{
-			"name": "resetpasses",
+			"name": "BadHealthcheck",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Wrong credentials, code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
-				"method": "POST",
+				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:9103/interoperability/api/admin/resetpasses",
+					"raw": "http://localhost:9103/interoperability/api/admin/badhealthcheck",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -78,15 +104,398 @@
 						"interoperability",
 						"api",
 						"admin",
-						"resetpasses"
+						"badhealthcheck"
 					]
 				},
-				"description": "Delete values from passes"
+				"description": "Example of bad credentials for connection error"
+			},
+			"response": []
+		},
+		{
+			"name": "PassesPerStation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"pm.test(\"Station_ID is AO09\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.Station).to.eql(\"AO09\");\r",
+							"});\r",
+							"pm.test(\"NumOfPasses is 8\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.NumberOfPasses).to.eql(8);\r",
+							"});\r",
+							"pm.test(\"FirstPassFromTheStationAmount is 3.1\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.PassesList[0].amount).to.eql(3.1);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9103/interoperability/api/PassesPerStation/AO09/2020-01-01 00:00:00/2020-01-31 23:59:59",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9103",
+					"path": [
+						"interoperability",
+						"api",
+						"PassesPerStation",
+						"AO09",
+						"2020-01-01 00:00:00",
+						"2020-01-31 23:59:59"
+					]
+				},
+				"description": "Returns all data of passes for station ID AO09 for January of 2020"
+			},
+			"response": []
+		},
+		{
+			"name": "PassesPerStationNullValue",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 402 no value to return\", function () {\r",
+							"    pm.response.to.have.status(402);\r",
+							"});\r",
+							"pm.test(\"NumOfPasses is 0\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.NumberOfPasses).to.eql(0);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9103/interoperability/api/PassesPerStation/AO09/2010-01-01 00:00:00/2010-01-31 23:59:59",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9103",
+					"path": [
+						"interoperability",
+						"api",
+						"PassesPerStation",
+						"AO09",
+						"2010-01-01 00:00:00",
+						"2010-01-31 23:59:59"
+					]
+				},
+				"description": "PaaesPerStation example of null value return"
+			},
+			"response": []
+		},
+		{
+			"name": "PassesPerStationCSV",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9103/interoperability/api/PassesPerStation/AO09/2020-01-01 00:00:00/2020-01-31 23:59:59?format=csv",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9103",
+					"path": [
+						"interoperability",
+						"api",
+						"PassesPerStation",
+						"AO09",
+						"2020-01-01 00:00:00",
+						"2020-01-31 23:59:59"
+					],
+					"query": [
+						{
+							"key": "format",
+							"value": "csv"
+						}
+					]
+				},
+				"description": "PassesPerStation example to return csv format"
+			},
+			"response": []
+		},
+		{
+			"name": "PassesAnalysis",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"NumOfPasses is 5\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.NumberOfPasses).to.eql(5);\r",
+							"});\r",
+							"pm.test(\"Operator1_ID is kentriki_odos\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.op1_ID).to.eql(\"kentriki_odos\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9103/interoperability/api/PassesAnalysis/kentriki_odos/olympia_odos/2020-01-01 00:00:00/2020-01-31 23:59:59",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9103",
+					"path": [
+						"interoperability",
+						"api",
+						"PassesAnalysis",
+						"kentriki_odos",
+						"olympia_odos",
+						"2020-01-01 00:00:00",
+						"2020-01-31 23:59:59"
+					]
+				},
+				"description": "Returns all data of passes for drivers with epasses to olympia_odos from stations that belong to kentriki_odos for January of 2020"
+			},
+			"response": []
+		},
+		{
+			"name": "PassesCost",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"PassesCost KO->OO below 13.801\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.PassesCost).to.be.below(13.801);\r",
+							"});\r",
+							"pm.test(\"PassesCost KO->OO over 13.799\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.PassesCost).to.be.above(13.79);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9103/interoperability/api/PassesCost/olympia_odos/kentriki_odos/2020-10-01 00:00:00/2020-10--31 23:59:59",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9103",
+					"path": [
+						"interoperability",
+						"api",
+						"PassesCost",
+						"olympia_odos",
+						"kentriki_odos",
+						"2020-10-01 00:00:00",
+						"2020-10--31 23:59:59"
+					]
+				},
+				"description": "Returns some data of passes including total debt of kentriki odos to olympia odos for October of 2020"
+			},
+			"response": []
+		},
+		{
+			"name": "PassesCostReverse",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"PassesCost OO->KO below 8.851\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.PassesCost).to.be.below(8.851);\r",
+							"});\r",
+							"pm.test(\"PassesCost OO->KO over 8.849\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.PassesCost).to.be.above(8.849);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9103/interoperability/api/PassesCost/kentriki_odos/olympia_odos/2020-10-01 00:00:00/2020-10--31 23:59:59",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9103",
+					"path": [
+						"interoperability",
+						"api",
+						"PassesCost",
+						"kentriki_odos",
+						"olympia_odos",
+						"2020-10-01 00:00:00",
+						"2020-10--31 23:59:59"
+					]
+				},
+				"description": "Returns data of passes including total debt of olympia odos to kentriki odos for October of 2020"
+			},
+			"response": []
+		},
+		{
+			"name": "ChargesBy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"PassesCost from gefyra over 7.099\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.PPOList[1].PassesCost).to.be.above(7.099);\r",
+							"});\r",
+							"pm.test(\"PassesCost from gefyra below 7.101\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.PPOList[1].PassesCost).to.be.below(7.101);\r",
+							"});\r",
+							"pm.test(\"PassesCost from nea_odos to be 5.7\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.PPOList[2].PassesCost).to.eql(5.700000047683716);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9103/interoperability/api/ChargesBy/kentriki_odos/2020-10-01 00:00:00/2020-10-31 23:59:59",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9103",
+					"path": [
+						"interoperability",
+						"api",
+						"ChargesBy",
+						"kentriki_odos",
+						"2020-10-01 00:00:00",
+						"2020-10-31 23:59:59"
+					]
+				},
+				"description": "Returns data of passes that belong to stations of kentriki_odos including total debdt from all operators for October of 2020"
+			},
+			"response": []
+		},
+		{
+			"name": "ChargesByReverse",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"PassesCost from kentriki_odos to be 14.8\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.PPOList[4].PassesCost).to.eql(14.799999952316284);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9103/interoperability/api/ChargesBy/nea_odos/2020-10-01 00:00:00/2020-10-31 23:59:59",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9103",
+					"path": [
+						"interoperability",
+						"api",
+						"ChargesBy",
+						"nea_odos",
+						"2020-10-01 00:00:00",
+						"2020-10-31 23:59:59"
+					]
+				},
+				"description": "Returns data of passes that belong to stations of nea_odos including total debdt from all operators for October of 2020"
 			},
 			"response": []
 		},
 		{
 			"name": "resetstations",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST resetstations\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -113,12 +522,25 @@
 						"resetstations"
 					]
 				},
-				"description": "Add values to stations"
+				"description": "Add data to stations"
 			},
 			"response": []
 		},
 		{
 			"name": "resetvehicles",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST resetvehicles\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -145,19 +567,19 @@
 						"resetvehicles"
 					]
 				},
-				"description": "Add values to vehicles"
+				"description": "Add data to vehicles"
 			},
 			"response": []
 		},
 		{
-			"name": "PassesPerStation",
+			"name": "resetpasses",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 402\", function () {\r",
-							"    pm.response.to.have.status(402);\r",
+							"pm.test(\"Successful POST resetpasses\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -165,48 +587,19 @@
 				}
 			],
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [],
-				"url": {
-					"raw": "http://localhost:9103/interoperability/api/PassesPerStation/AO07/2019-01-01 01:00:00/2019-01-01 06:00:00",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "9103",
-					"path": [
-						"interoperability",
-						"api",
-						"PassesPerStation",
-						"AO07",
-						"2019-01-01 01:00:00",
-						"2019-01-01 06:00:00"
-					]
-				},
-				"description": "Returns all data of passes for a given station ID and between given dates"
-			},
-			"response": []
-		},
-		{
-			"name": "PassesAnalysis",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 402\", function () {\r",
-							"    pm.response.to.have.status(402);\r",
-							"});"
-						],
-						"type": "text/javascript"
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
 					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
+				},
 				"url": {
-					"raw": "http://localhost:9103/interoperability/api/PassesAnalysis/olympia_odos/kentriki_odos/2019-01-01 01:40:00/2019-01-01 5:25:00",
+					"raw": "http://localhost:9103/interoperability/api/admin/resetpasses",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -215,78 +608,11 @@
 					"path": [
 						"interoperability",
 						"api",
-						"PassesAnalysis",
-						"olympia_odos",
-						"kentriki_odos",
-						"2019-01-01 01:40:00",
-						"2019-01-01 5:25:00"
+						"admin",
+						"resetpasses"
 					]
 				},
-				"description": "Returns all data of passes for op2 from stations that belong to op1 in given dates"
-			},
-			"response": []
-		},
-		{
-			"name": "PassesCost",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 402\", function () {\r",
-							"    pm.response.to.have.status(402);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:9103/interoperability/api/PassesCost/olympia_odos/kentriki_odos/2019-01-01 01:40:00/2019-01-01 05:25:00",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "9103",
-					"path": [
-						"interoperability",
-						"api",
-						"PassesCost",
-						"olympia_odos",
-						"kentriki_odos",
-						"2019-01-01 01:40:00",
-						"2019-01-01 05:25:00"
-					]
-				},
-				"description": "Returns some data of passes total debt of given operator 2 to operator 1"
-			},
-			"response": []
-		},
-		{
-			"name": "ChargesBy",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:9103/interoperability/api/ChargesBy/olympia_odos/2019-01-01 01:40:00/2019-01-01 05:25:00",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "9103",
-					"path": [
-						"interoperability",
-						"api",
-						"ChargesBy",
-						"olympia_odos",
-						"2019-01-01 01:40:00",
-						"2019-01-01 05:25:00"
-					]
-				},
-				"description": "Returns all data of passes that belong to stations of given operator 1 for given dates"
+				"description": "Delete data from passes"
 			},
 			"response": []
 		}
