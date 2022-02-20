@@ -4,6 +4,14 @@ const port = 9103;
 const bodyparser = require('body-parser')
 var path = require('path');
 
+// =============="npm i cors"=============
+const cors = require('cors');
+
+app.use(cors({
+    origin: 'http://localhost:3000'
+}))
+//========================================
+
 //middlewares
 app.use(bodyparser.json())
 
