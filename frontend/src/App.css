@@ -1,3 +1,29 @@
+.main_title{
+  margin:auto;
+
+  border: solid 4px;
+  border-radius: 10px;
+  color: chocolate;
+  font-family: "Avenir";
+  font-weight: bold;
+  text-align: center;
+  width: 700px;
+}
+*/
+ .charges{
+  /* margin: auto; */
+  font-size: 25px;
+  font-family: "Avenir";
+} 
+
+.fields{
+  margin:20px;
+}
+
+
+
+
+
 .App {
   text-align: center;
 }
