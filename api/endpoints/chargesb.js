@@ -19,13 +19,14 @@ function getchargesbyData(req,res){
 	test.op_ID = req.params.op_ID;
 	test.PeriodFrom = req.params.date_from;
 	test.PeriodTo = req.params.date_to;
+	//Json or csv
         var l = req.query.format;
 
 	con.connect(function(err) {
 		if (err) throw err;
 		console.log("Connected!");
 		//query to get charges by data given opID and dates
-		let myquery="SELECT operatorID2 as VisitingOperator, count(*) as NumberOfPasses, sum(amount) as PassesCost FROM passes WHERE operatorID1="+"'"+req.params.op_ID+"'"+" and timestamp >="+"'"+req.params.date_from+"'"+" and timestamp <="+"'"+req.params.date_to+"'"+" group by operatorID2";
+		let myquery="SELECT operatorID2 as VisitingOperator, count(*) as NumberOfPasses, sum(amount) as PassesCost FROM passes WHERE pass_type = 'visitor' and operatorID1="+"'"+req.params.op_ID+"'"+" and timestamp >="+"'"+req.params.date_from+"'"+" and timestamp <="+"'"+req.params.date_to+"'"+" group by operatorID2";
 		con.query(myquery, function (err, result, fields){
 			if (err) throw err;
 

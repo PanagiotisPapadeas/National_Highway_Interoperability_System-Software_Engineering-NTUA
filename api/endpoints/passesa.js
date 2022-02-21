@@ -20,8 +20,12 @@ function getpassesaData(req,res){
 	test.op2_ID = req.params.op2_ID;
 	test.PeriodFrom = req.params.date_from;
 	test.PeriodTo = req.params.date_to;
+	//json or csv
 	var l = req.query.format;
+	//status code
         var code;
+	//index for passIndex
+	var i;
 
 	con.connect(function(err) {
 		if (err) throw err;
@@ -47,6 +51,8 @@ function getpassesaData(req,res){
 		con.query(myquery, function (err, result, fields){
 			if (err) throw err;
 			test.PassesList = result;
+			for (i=0; i<test.PassesList.length; i++)
+				test.PassesList[i].PassIndex = i+1;
 			if (l=="csv"){
 			converter.json2csv(test, function(err, csv){
 				if (err) throw err;

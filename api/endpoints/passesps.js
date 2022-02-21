@@ -19,8 +19,12 @@ function getpassespsData(req,res){
 	test.Station = req.params.stationID;
 	test.PeriodFrom = req.params.date_from;
 	test.PeriodTo = req.params.date_to;
+	//Json or csv
         var l = req.query.format;
+	//status code
 	var code;
+	//index for passindex
+	var i;
 
 	con.connect(function(err) {
 		if (err) throw err;
@@ -59,6 +63,8 @@ function getpassespsData(req,res){
 		con.query(myquery, function (err, result, fields){
 			if (err) throw err;
 			test.PassesList = result;
+			for (i=0; i<test.PassesList.length; i++)
+				test.PassesList[i].PassIndex = i+1;
 			if (l=="csv"){
 			converter.json2csv(test, function(err, csv){
 				if (err) throw err;

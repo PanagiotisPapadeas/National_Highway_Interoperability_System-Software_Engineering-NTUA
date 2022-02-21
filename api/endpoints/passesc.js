@@ -20,7 +20,9 @@ function getpassescData(req,res){
 	test.op2_ID = req.params.op2_ID;
 	test.PeriodFrom = req.params.date_from;
 	test.PeriodTo = req.params.date_to;
+	//Json or csv
         var l = req.query.format;
+	//status code
         var code;
 
 	con.connect(function(err) {
@@ -40,7 +42,8 @@ function getpassescData(req,res){
 			test.NumberOfPasses = result[0]["Num"];
 			//check number to return suitable code
 			if (result[0]["Num"]==0) code = 402;
-			test.PassesCost = result[0]["PassesC"];
+			if (test.op1_ID == test.op2_ID) test.PassesCost = 0;
+			else test.PassesCost = result[0]["PassesC"];
 			if (l=="csv"){
 			converter.json2csv(test, function(err, csv){a
 				if (err) throw err;
