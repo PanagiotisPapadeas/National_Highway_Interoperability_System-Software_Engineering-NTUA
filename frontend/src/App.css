@@ -39,6 +39,7 @@ form{
 
 form > input{
   margin-left: 80%;
+  transform: translate(0, -30px);
   
 }
 
