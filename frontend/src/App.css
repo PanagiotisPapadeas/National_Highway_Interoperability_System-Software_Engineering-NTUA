@@ -1,3 +1,8 @@
+.sub_div{
+  vertical-align: middle;
+  display: inline-block;
+}
+
 .main_title{
   margin:auto;
 
@@ -9,7 +14,7 @@
   text-align: center;
   width: 700px;
 }
-*/
+
  .charges{
   /* margin: auto; */
   font-size: 25px;
@@ -17,12 +22,25 @@
 } 
 
 .fields{
-  margin:20px;
+  margin: 20px;
 }
 
+tr{
+  margin: 50px;
+}
 
+form{
+  border: 2px solid;
+  width: 40%;
+  border-radius: 10px;
+  margin-left: 10px;
+  border-color:dodgerblue;
+}
 
-
+form > input{
+  margin-left: 80%;
+  
+}
 
 .App {
   text-align: center;
