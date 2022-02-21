@@ -132,7 +132,7 @@
 							"    var jsonData = pm.response.json();\r",
 							"    pm.expect(jsonData.NumberOfPasses).to.eql(8);\r",
 							"});\r",
-							"pm.test(\"FirstPassFromTheStationAmount is 3.1\", function () {\r",
+							"pm.test(\"First Pass From The Station PassCharge is 3.1\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
 							"    pm.expect(jsonData.PassesList[0].PassCharge).to.eql(3.1);\r",
 							"});"
@@ -298,6 +298,49 @@
 			"response": []
 		},
 		{
+			"name": "PassesAnalysisInvalidDates",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 402 no value to return\", function () {\r",
+							"    pm.response.to.have.status(402);\r",
+							"});\r",
+							"pm.test(\"PassesList is null\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.PassesList).to.eql([]);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9103/interoperability/api/PassesAnalysis/kentriki_odos/olympia_odos/2020-01-01 00:00:00/2019-01-31 23:59:59",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9103",
+					"path": [
+						"interoperability",
+						"api",
+						"PassesAnalysis",
+						"kentriki_odos",
+						"olympia_odos",
+						"2020-01-01 00:00:00",
+						"2019-01-31 23:59:59"
+					]
+				},
+				"description": "Passes Analysis example of invalid dates (e.g date from > date to)"
+			},
+			"response": []
+		},
+		{
 			"name": "PassesCost",
 			"event": [
 				{
@@ -313,7 +356,7 @@
 							"});\r",
 							"pm.test(\"PassesCost KO->OO over 13.799\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.PassesCost).to.be.above(13.79);\r",
+							"    pm.expect(jsonData.PassesCost).to.be.above(13.799);\r",
 							"});\r",
 							""
 						],
@@ -390,6 +433,49 @@
 			"response": []
 		},
 		{
+			"name": "PassesCostOP1_ID=OP2_ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"PassesCost is 0\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.PassesCost).to.eql(0);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9103/interoperability/api/PassesCost/olympia_odos/olympia_odos/2020-10-01 00:00:00/2020-10--31 23:59:59",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9103",
+					"path": [
+						"interoperability",
+						"api",
+						"PassesCost",
+						"olympia_odos",
+						"olympia_odos",
+						"2020-10-01 00:00:00",
+						"2020-10--31 23:59:59"
+					]
+				},
+				"description": "Passes Cost example where both op1_ID and op2_ID are the same"
+			},
+			"response": []
+		},
+		{
 			"name": "ChargesBy",
 			"event": [
 				{
@@ -399,17 +485,17 @@
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
-							"pm.test(\"PassesCost from gefyra over 7.099\", function () {\r",
+							"pm.test(\"PassesCost from gefyra to be over 7.099\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.PPOList[1].PassesCost).to.be.above(7.099);\r",
+							"    pm.expect(jsonData.PPOList[0].PassesCost).to.be.above(7.099);\r",
 							"});\r",
-							"pm.test(\"PassesCost from gefyra below 7.101\", function () {\r",
+							"pm.test(\"PassesCost from gefyra to be below 7.101\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.PPOList[1].PassesCost).to.be.below(7.101);\r",
+							"    pm.expect(jsonData.PPOList[0].PassesCost).to.be.below(7.101);\r",
 							"});\r",
-							"pm.test(\"PassesCost from nea_odos to be 5.7\", function () {\r",
+							"pm.test(\"PassesCost from nea_odos to be nea_odos to be 5.7\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.PPOList[2].PassesCost).to.eql(5.700000047683716);\r",
+							"    pm.expect(jsonData.PPOList[1].PassesCost).to.eql(5.700000047683716);\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -451,7 +537,7 @@
 							"});\r",
 							"pm.test(\"PassesCost from kentriki_odos to be 14.8\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.PPOList[4].PassesCost).to.eql(14.799999952316284);\r",
+							"    pm.expect(jsonData.PPOList[3].PassesCost).to.eql(14.799999952316284);\r",
 							"});"
 						],
 						"type": "text/javascript"
