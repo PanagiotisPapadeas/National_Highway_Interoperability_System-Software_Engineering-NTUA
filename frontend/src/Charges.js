@@ -13,7 +13,7 @@ export default function Charges(){
         </ul>
             <ol>
                 <li>
-                    <label for="operators">Choose Operator1: </label>
+                    <label>Choose Operator1: </label>
                     <select name="operators" id="operators">
                         <option value="aodos">Attiki Odos</option>
                         <option value="gefyra">Gefyra</option>
@@ -25,7 +25,7 @@ export default function Charges(){
                     </select>
                 </li>
                 <li>
-                <label for="operators">Choose Operator2: </label>
+                <label>Choose Operator2: </label>
                     <select name="operators" id="operators">
                         <option value="aodos">Attiki Odos</option>
                         <option value="gefyra">Gefyra</option>
@@ -38,11 +38,11 @@ export default function Charges(){
                 </li>
                 <br></br>
                 <li>
-                    <label for="pass_datetime">Starting Datetime: </label>
+                    <label htmlFor="pass_datetime">Starting Datetime: </label>
                     <input type="text" placeholder="2020-03-23 13:46:27" required size="14" maxLength={19}></input>
                 </li>
                 <li>
-                    <label for="pass_datetime">Ending Datetime: </label>
+                    <label htmlFor="pass_datetime">Ending Datetime: </label>
                     <input type="text" placeholder="2020-03-23 13:46:27" required size="14" maxLength={19}></input>
                 </li>
             </ol>

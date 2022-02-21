@@ -38,28 +38,28 @@ export default function Stats() {
                 </ul>
                 <ol>
                     <li>   
-                        Operator: <select name="operator" id="operator">
-                            <option value="" selected="selected">Select Operator</option>
+                        Operator: <select defaultValue={"selected"} name="operator" id="operator">
+                            <option value="">Select Operator</option>
                         </select>
                         <br></br>
                     </li>
                     <li> 
-                        StationID: <select name="station" id="station">
-                            <option value="" selected="selected">Select Station</option>
+                        StationID: <select defaultValue={"selected"} name="station" id="station">
+                            <option value="">Select Station</option>
                         </select>
                         <br></br>
                     <br></br>
                     </li>
                     <li>
-                        <label for="pass_datetime">Starting Datetime: </label>
+                        <label htmlFor="pass_datetime">Starting Datetime: </label>
                         <input type="text" placeholder="2020-03-23 13:46:27" required size="14" maxLength={19}></input>
                     </li>
                     <li>
-                        <label for="pass_datetime">Ending Datetime: </label>
+                        <label htmlFor="pass_datetime">Ending Datetime: </label>
                         <input type="text" placeholder="2020-03-23 13:46:27" required size="14" maxLength={19}></input>
                     </li>
                 </ol>
-                <input type="submit" value="Submit" size="10"></input>
+                
             </form>
         </>
     )

@@ -1,10 +1,13 @@
 import './App.css';
 import React from 'react';
 import Charges from "./Charges";
-// import Identity from "./Identity";
 import Stats from "./Stats";
+import axios from "axios"
 
-
+const api = axios.create({
+  baseURL: "http://localhost:9103/interoperability/api",
+  //apiURL: "http://localhost:9103"
+});
 
 class App extends React.Component
 {
@@ -13,14 +16,27 @@ class App extends React.Component
 	//   super(props);
 	//   this.state = { user : props.user };
   // }
-  render()        /*This will return the required html page*/
+
+  // state = {
+  //   values: []
+  // }
+  constructor(){
+    super();
+
+    api.get('/admin/healthcheck').then(res =>{
+      console.log(res.data)
+      // this.setState({values: res.data})
+    })
+  }
+  
+  render()
   {
     // let userName = this .state.user === null ? "<anonymous>" : this.state.user;
     return(
       
       <>
         {/* <select> name </select> */}
-
+        {/* {this.state.values.map(value => <h2 key = {value.status}>{value.dbconnection}</h2>)} */}
         <div className="main_title">
           <h1>Welcome to <em>Highway Interoperability System</em></h1>
         </div>
