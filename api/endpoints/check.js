@@ -22,8 +22,8 @@ function health(req,res){
          
 	//check if connection was successful
 	con.connect(function(err) {
-		console.log("Not Connected!");
-		if (err) res.status(400).send(test2);
+		if (err) {console.log("Not Connected!");
+			res.status(400).send(test2);}
 		else {
 			console.log("Connected!");
 		res.status(200).send(test);
