@@ -1,7 +1,15 @@
-import React from "react"
+import React, {useState} from "react"
 import "./App.css"
+import axios from "axios";
+
+const api = axios.create({
+    baseURL: "http://localhost:9103/interoperability/api/",
+  });
+  
 
 export default function Stats() {
+    
+//===================================Cascading dropdown lists=====================================    
     var operatorStations = {
          "Attiki Odos": ["AO00", "AO01", "AO02", "AO03", "AO04", "AO05", "AO06", "AO07", "AO08", "AO09", "AO10", "AO11", "AO12", "AO13", "AO14", "AO15", "AO16", "AO17", "AO18", "AO19"],
          "Gefyra": ["GF00"],
@@ -28,11 +36,33 @@ export default function Stats() {
             }
         }
      }
+//===============================================================================================================
+
+const [passNum, setPassNum] = useState("0");
+const passesRequest = (() => {
+        
+    var station = document.getElementById("station").value;
+    var start = document.getElementById("start_datetime").value;
+    var end = document.getElementById("end_datetime").value;
+   
+    // console.log(op1);
+    // console.log(op2);
+    // console.log(start);
+    // console.log(end);
+    const res = api.get("PassesPerStation/" + station + "/" + start + "/" + end)
+    .then((res) => {
+        alert(JSON.stringify(res))
+        // setPassNum((JSON.stringify(res.data.NumberOfPasses))s);
+        // setAmount(JSON.stringify(res.data.PassesCost));
+        // return(JSON.stringify(res.data.PassesCost));
+      
+})
+});    
 
     return(
         <>
             <br></br>
-            <form>
+            <form id="stats">
                 <ul>
                     <li>Choose a stationID and a time period to view the number of passes: </li>                
                 </ul>
@@ -52,15 +82,16 @@ export default function Stats() {
                     </li>
                     <li>
                         <label htmlFor="pass_datetime">Starting Datetime: </label>
-                        <input type="text" placeholder="2020-03-23 13:46:27" required size="14" maxLength={19}></input>
+                        <input type="text" placeholder="2020-03-23 13:46:27" required size="14" maxLength={19} id="start_datetime"></input>
                     </li>
                     <li>
                         <label htmlFor="pass_datetime">Ending Datetime: </label>
-                        <input type="text" placeholder="2020-03-23 13:46:27" required size="14" maxLength={19}></input>
+                        <input type="text" placeholder="2020-03-23 13:46:27" required size="14" maxLength={19} id="end_datetime"></input>
                     </li>
                 </ol>
-                
+                <input onClick = {passesRequest} type="submit" value="Submit" size="10"></input>
             </form>
+            {/* <h2>Number of passes: {passNum}</h2> */}
         </>
     )
 }

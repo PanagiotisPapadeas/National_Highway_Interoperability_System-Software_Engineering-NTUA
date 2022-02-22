@@ -1,6 +1,8 @@
 .sub_div{
+  transform: translate(0, 30px);
   vertical-align: middle;
-  display: inline-block;
+  margin-top: 15px;
+  display: flex;
 }
 
 .main_title{
@@ -29,13 +31,27 @@ tr{
   margin: 50px;
 }
 
-form{
+#charges{
   border: 2px solid;
-  width: 40%;
+  height: 200px;
+  width: 600px;
   border-radius: 10px;
-  margin-left: 10px;
+  margin-left: 30px;
+  margin-right: 30px;
   border-color:dodgerblue;
+} 
+
+#stats{
+  border: 2px solid;
+  width: 600px;
+  height:200px;
+  border-radius: 10px;
+  margin-left: 30px;
+  margin-right: 30px;
+  border-color: dodgerblue;
 }
+
+
 
 form > input{
   margin-left: 80%;
