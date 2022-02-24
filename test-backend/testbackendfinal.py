@@ -47,7 +47,7 @@ myresult4 = mycursor.fetchall()
 
 
 #1.print(myresult1)
-if((myresult1[0][5]) == 3.1):
+if((myresult1[0][5]) == 2.8):
 	print ("PASSESPS amount: " + colors.OKGREEN + "SUCCESS" + colors.ENDC) 
 else: print("PASSESPS" + colors.FAIL + "FAIL" + colors.ENDC)
 
@@ -79,7 +79,7 @@ else:
 	print ("PASSESCOST" + colors.FAIL + "FAIL" + colors.ENDC)
 
 #4.print(myresult4)
-if (myresult4[1][2] > 7.099 and myresult4[1][2] < 7.101): 
+if (myresult4[1][2] > 9.650 and myresult4[1][2] < 9.651): 
 	print ("CHARGESBY cost from egnatia to kentriki is 7.1 " + colors.OKGREEN + "SUCCESS" + colors.ENDC)
 else: 
 	print ("CHARGESBY" + colors.FAIL + "FAIL" + colors.ENDC)
