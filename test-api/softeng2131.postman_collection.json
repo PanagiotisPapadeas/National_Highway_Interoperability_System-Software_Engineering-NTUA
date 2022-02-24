@@ -132,9 +132,9 @@
 							"    var jsonData = pm.response.json();\r",
 							"    pm.expect(jsonData.NumberOfPasses).to.eql(8);\r",
 							"});\r",
-							"pm.test(\"First Pass From The Station PassCharge is 3.1\", function () {\r",
+							"pm.test(\"EarliestPassFromTheStationCharge is 2.8\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.PassesList[0].PassCharge).to.eql(3.1);\r",
+							"    pm.expect(jsonData.PassesList[0].PassCharge).to.eql(2.8);\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -368,7 +368,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:9103/interoperability/api/PassesCost/olympia_odos/kentriki_odos/2020-10-01 00:00:00/2020-10--31 23:59:59",
+					"raw": "http://localhost:9103/interoperability/api/PassesCost/olympia_odos/kentriki_odos/2020-10-01 00:00:00/2020-10-31 23:59:59",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -381,7 +381,7 @@
 						"olympia_odos",
 						"kentriki_odos",
 						"2020-10-01 00:00:00",
-						"2020-10--31 23:59:59"
+						"2020-10-31 23:59:59"
 					]
 				},
 				"description": "Returns some data of passes including total debt of kentriki odos to olympia odos for October of 2020"
@@ -412,7 +412,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:9103/interoperability/api/PassesCost/kentriki_odos/olympia_odos/2020-10-01 00:00:00/2020-10--31 23:59:59",
+					"raw": "http://localhost:9103/interoperability/api/PassesCost/kentriki_odos/olympia_odos/2020-10-01 00:00:00/2020-10-31 23:59:59",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -425,7 +425,7 @@
 						"kentriki_odos",
 						"olympia_odos",
 						"2020-10-01 00:00:00",
-						"2020-10--31 23:59:59"
+						"2020-10-31 23:59:59"
 					]
 				},
 				"description": "Returns data of passes including total debt of olympia odos to kentriki odos for October of 2020"
@@ -455,7 +455,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:9103/interoperability/api/PassesCost/olympia_odos/olympia_odos/2020-10-01 00:00:00/2020-10--31 23:59:59",
+					"raw": "http://localhost:9103/interoperability/api/PassesCost/olympia_odos/olympia_odos/2020-10-01 00:00:00/2020-10-31 23:59:59",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -468,7 +468,7 @@
 						"olympia_odos",
 						"olympia_odos",
 						"2020-10-01 00:00:00",
-						"2020-10--31 23:59:59"
+						"2020-10-31 23:59:59"
 					]
 				},
 				"description": "Passes Cost example where both op1_ID and op2_ID are the same"
@@ -485,17 +485,17 @@
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
-							"pm.test(\"PassesCost from gefyra to be over 7.099\", function () {\r",
+							"pm.test(\"PassesCost from gefyra over 7.099\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.PPOList[0].PassesCost).to.be.above(7.099);\r",
+							"    pm.expect(jsonData.PPOList[2].PassesCost).to.be.above(7.099);\r",
 							"});\r",
-							"pm.test(\"PassesCost from gefyra to be below 7.101\", function () {\r",
+							"pm.test(\"PassesCost from gefyra below 7.101\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.PPOList[0].PassesCost).to.be.below(7.101);\r",
+							"    pm.expect(jsonData.PPOList[2].PassesCost).to.be.below(7.101);\r",
 							"});\r",
-							"pm.test(\"PassesCost from nea_odos to be nea_odos to be 5.7\", function () {\r",
+							"pm.test(\"PassesCost from nea_odos to be 5.7\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.PPOList[1].PassesCost).to.eql(5.700000047683716);\r",
+							"    pm.expect(jsonData.PPOList[4].PassesCost).to.eql(5.700000047683716);\r",
 							"});"
 						],
 						"type": "text/javascript"
