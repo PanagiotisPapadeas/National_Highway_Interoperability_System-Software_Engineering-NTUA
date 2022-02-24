@@ -80,7 +80,7 @@ class TestStringMethods(unittest.TestCase):
     def test_admin(self):
         print(9)
         # Insert and then delete dummy data
-        os.system("python se2131.py admin --passesupd --source passes.csv > .tmp")
+        os.system("python se2131.py admin --passesupd --source sample_pass.csv > .tmp")
         try:
             connection =  mysql.connector.connect(
                 host="localhost",

@@ -55,7 +55,7 @@ parser_pps = subparsers.add_parser("passesperstation", help="Get passes per stat
 parser_pps.add_argument("--station", required=True, help="Station to get data for")
 parser_pps.add_argument("--datefrom", required=True, help="Date to start the search")
 parser_pps.add_argument("--dateto", required=True, help="Date to end the search")
-parser_pps.add_argument("--format", required=True, help=".csv or json")
+parser_pps.add_argument("--format", default="csv", help=".csv or json")
 
 parser_analysis = subparsers.add_parser("passesanalysis", help="""Return passes with tags from one operator and
     stations from another""")
@@ -63,20 +63,20 @@ parser_analysis.add_argument("--op1", required=True, help="Operator that owns th
 parser_analysis.add_argument("--op2", required=True, help="Operator that owns the tags")
 parser_analysis.add_argument("--datefrom", required=True, help="Date to start the search")
 parser_analysis.add_argument("--dateto", required=True, help="Date to end the search")
-parser_analysis.add_argument("--format", required=True, help=".csv or json")
+parser_analysis.add_argument("--format", default="csv", help=".csv or json")
 
 parser_passescost = subparsers.add_parser("passescost", help="Get debt from one operator to another")
 parser_passescost.add_argument("--op1", required=True, help="Operator that owns the stations")
 parser_passescost.add_argument("--op2", required=True, help="Operator that owns the tags")
 parser_passescost.add_argument("--datefrom", required=True, help="Date to start the search")
 parser_passescost.add_argument("--dateto", required=True, help="Date to end the search")
-parser_passescost.add_argument("--format", required=True, help=".csv or json")
+parser_passescost.add_argument("--format", default="csv", help=".csv or json")
 
 parser_chargesby = subparsers.add_parser("chargesby", help="Get debts to onee operator from all others")
 parser_chargesby.add_argument("--op1", required=True, help="Operator that owns the stations")
 parser_chargesby.add_argument("--datefrom", required=True, help="Date to start the search")
 parser_chargesby.add_argument("--dateto", required=True, help="Date to end the search")
-parser_chargesby.add_argument("--format", required=True, help=".csv or json")
+parser_chargesby.add_argument("--format", default="csv", help=".csv or json")
 
 parser_admin = subparsers.add_parser("admin", help="Configure the database as an admin")
 parser_admin.add_argument("--passesupd", action="store_true", help="Upload passes from a .csv file")
@@ -217,13 +217,11 @@ elif args.subcommand == "passesanalysis":
         status_code = 500
 elif args.subcommand == "passescost":
     try:
-        print("here")
         cursor.execute("""select count(*) as NumberofPasses, sum(amount) as PassesCost
             from passes
             where operatorID1 = '""" + args.op1 + """' and operatorID2 = '""" + args.op2 +
             """' and timestamp >= """ + args.datefrom + """ and timestamp <= """ + args.dateto)
         result = cursor.fetchall()
-        print(str(result))
         if args.format == "json":
             save_as_json(result, "passescost.json")
             status_code = 200
@@ -242,7 +240,6 @@ elif args.subcommand == "chargesby":
             where operatorID1 = '""" + args.op1 + """' and pass_type = 'visitor' and timestamp >= """ +
             args.datefrom + """ and timestamp <= """ + args.dateto + " group by operatorID2")
         result = cursor.fetchall()
-        print(str(result))
         if args.format == "json":
             save_as_json(result, "chargesby.json")
             status_code = 200
@@ -257,7 +254,6 @@ elif args.subcommand == "chargesby":
 elif args.subcommand == "admin":
     if args.passesupd:
         if args.source is None: 
-            print("Could not open file!")
             status_code = 400
         else:
             try:
