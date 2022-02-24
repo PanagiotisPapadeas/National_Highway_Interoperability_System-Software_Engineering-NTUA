@@ -192,7 +192,6 @@ elif args.subcommand == "passesperstation":
             save_as_csv(result, "passesperstation.csv")
             status_code = 200
         else:
-            #print("Incorrect format!")
             status_code = 400
     except mysql.connector.Error as err:
         print(err)
@@ -212,19 +211,19 @@ elif args.subcommand == "passesanalysis":
             save_as_csv(result, "passesanalysis.csv")
             status_code = 200
         else:
-            #print("Incorrect format!")
             status_code = 400
     except mysql.connector.Error as err:
         print(err)
         status_code = 500
 elif args.subcommand == "passescost":
     try:
+        print("here")
         cursor.execute("""select count(*) as NumberofPasses, sum(amount) as PassesCost
             from passes
-            where operatorID1 = '""" + args.op1 + """"' and operatorID2 = '""" + args.op2 +
-            """' and timestamp >= """ + args.datefrom + """ and timestamp <= """ + args.dateto +
-            " order by timestamp")
+            where operatorID1 = '""" + args.op1 + """' and operatorID2 = '""" + args.op2 +
+            """' and timestamp >= """ + args.datefrom + """ and timestamp <= """ + args.dateto)
         result = cursor.fetchall()
+        print(str(result))
         if args.format == "json":
             save_as_json(result, "passescost.json")
             status_code = 200
@@ -232,7 +231,6 @@ elif args.subcommand == "passescost":
             save_as_csv(result, "passescost.csv")
             status_code = 200
         else:
-            #print("Incorrect format!")
             status_code = 400
     except mysql.connector.Error as err:
         print(err)
@@ -244,6 +242,7 @@ elif args.subcommand == "chargesby":
             where operatorID1 = '""" + args.op1 + """' and pass_type = 'visitor' and timestamp >= """ +
             args.datefrom + """ and timestamp <= """ + args.dateto + " group by operatorID2")
         result = cursor.fetchall()
+        print(str(result))
         if args.format == "json":
             save_as_json(result, "chargesby.json")
             status_code = 200
@@ -251,7 +250,6 @@ elif args.subcommand == "chargesby":
             save_as_csv(result, "chargesby.csv")
             status_code = 200
         else:
-            #print("Incorrect format!")
             status_code = 400
     except mysql.connector.Error as err:
         print(err)
