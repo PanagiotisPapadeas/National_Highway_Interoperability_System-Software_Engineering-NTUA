@@ -59,7 +59,7 @@ function getpassespsData(req,res){
 			if (resu[0]["Num"] == 0) code = 402;
 		});
 		//query for passes per station given stationID and dates
-		let myquery="SELECT passID, stationID, timestamp as PassTimestamp, vehicleID, tag_provider as TagProvider, pass_type as PassType, amount as PassCharge FROM passes, tags WHERE passes.tagID = tags.tagID and stationID ="+"'"+req.params.stationID+"'"+" and timestamp >="+"'"+req.params.date_from+"'"+" and timestamp <="+"'"+req.params.date_to+"'";
+		let myquery="SELECT passID, stationID, timestamp as PassTimestamp, vehicleID, tag_provider as TagProvider, pass_type as PassType, amount as PassCharge FROM passes, tags WHERE passes.tagID = tags.tagID and stationID ="+"'"+req.params.stationID+"'"+" and timestamp >="+"'"+req.params.date_from+"'"+" and timestamp <="+"'"+req.params.date_to+"'"+"order by timestamp";
 		con.query(myquery, function (err, result, fields){
 			if (err) throw err;
 			test.PassesList = result;
