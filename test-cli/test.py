@@ -10,18 +10,16 @@ class TestStringMethods(unittest.TestCase):
         f = open(".tmp", "r")
         self.assertEqual(int(f.read()), 200)
         f.close()
-    def test_resetpasses(self):
-        os.system("python ../cli/se2131.py resetpasses > .tmp")
-        f = open(".tmp", "r")
-        self.assertEqual(int(f.read()), 200)
-        f.close()
-    def test_resetstations(self):
+    def test_reset(self):
         os.system("python ../cli/se2131.py resetstations > .tmp")
         f = open(".tmp", "r")
         self.assertEqual(int(f.read()), 200)
         f.close()
-    def test_resetvehicles(self):
         os.system("python ../cli/se2131.py resetvehicles > .tmp")
+        f = open(".tmp", "r")
+        self.assertEqual(int(f.read()), 200)
+        f.close()
+        os.system("python ../cli/se2131.py resetpasses > .tmp")
         f = open(".tmp", "r")
         self.assertEqual(int(f.read()), 200)
         f.close()
@@ -94,7 +92,6 @@ class TestStringMethods(unittest.TestCase):
         f = open(".tmp", "r")
         self.assertEqual(int(f.read()), 400)
         f.close()
-
 
 if __name__ == '__main__':
     unittest.main() # simply call all tests
