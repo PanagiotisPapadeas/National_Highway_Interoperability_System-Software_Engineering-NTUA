@@ -47,7 +47,7 @@ function getpassesaData(req,res){
 			if (resu[0]["Num"] == 0) code = 402;
 		});
 		//query to get analysis data given op1ID, op2ID and dates
-		let myquery="SELECT passID, stationID, timestamp, vehicleID, amount as Charge FROM passes WHERE pass_type = 'visitor' and operatorID1="+"'"+req.params.op1_ID+"'"+" and operatorID2="+"'"+req.params.op2_ID+"'"+" and timestamp >="+"'"+req.params.date_from+"'"+" and timestamp <="+"'"+req.params.date_to+"'";
+		let myquery="SELECT passID, stationID, timestamp, vehicleID, amount as Charge FROM passes WHERE pass_type = 'visitor' and operatorID1="+"'"+req.params.op1_ID+"'"+" and operatorID2="+"'"+req.params.op2_ID+"'"+" and timestamp >="+"'"+req.params.date_from+"'"+" and timestamp <="+"'"+req.params.date_to+"'"+"order by timestamp";
 		con.query(myquery, function (err, result, fields){
 			if (err) throw err;
 			test.PassesList = result;
