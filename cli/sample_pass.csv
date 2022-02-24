@@ -1,0 +1,2 @@
+passID,stationID,tagID,amount,timestamp,vehicleID,operatorID1,operatorID2,pass_type
+WSI3219900,KO01,KO38E3788,0,2010-01-01 01:00:01,ED51EWW52190,kentriki_odos,kentriki_odos,home

@@ -4,8 +4,12 @@ import json
 import pandas
 import mysql.connector
 
+status_code = 0 # used for testing purposes
+
+# Save SQL query as .csv file
 def save_as_csv(query, name):
-    c = csv.writer(open(name, 'w'))
+    path = "results/" + name
+    c = csv.writer(open(path, 'w'))
     result = []
     names = []
     for i in cursor.description:
@@ -15,14 +19,15 @@ def save_as_csv(query, name):
         result.append(row)
     c.writerows(result)
 
+# Save SQL query as .json file
 def save_as_json(query, name):
+    path = "results/" + name
     save_as_csv(query, ".temp.csv")
-    with open(".temp.csv") as f:
+    with open("results/.temp.csv") as f:
         reader = csv.DictReader(f)
         rows = list(reader)
-    with open(name, 'w') as f:
+    with open(path, 'w') as f:
         json.dump(rows, f)
-print("Script started!")
 
 connected = True
 try:
@@ -37,7 +42,8 @@ except mysql.connector.Error as e:
     print(e)
 cursor = connection.cursor()
 
-parser = argparse.ArgumentParser(description='CLI program for')
+# Main parser
+parser = argparse.ArgumentParser(description='CLI program for HIS')
 subparsers = parser.add_subparsers(dest="subcommand", help= "Choose the specific subcommand to execute")
 
 parser_healthcheck = subparsers.add_parser("healthcheck", help="Confirm successful connection to the database")
@@ -77,14 +83,15 @@ parser_admin.add_argument("--passesupd", action="store_true", help="Upload passe
 parser_admin.add_argument("--source", help="Operator that owns the stations")
 
 args = parser.parse_args()
-#print(str(args))
 
 if args.subcommand == "healthcheck":
     f = open("healthcheck.json", "w")
     if connected == True:
         json_object = {"status":"OK", "dbconnection":"softeng2131"}
+        status_code = 200
     else:
         json_object = {"status": "failed"}
+        status_code = 500
     json.dump(json_object, f, ensure_ascii=False)
 elif args.subcommand == "resetpasses":
     f = open("resetpasses.json", "w")
@@ -99,14 +106,14 @@ elif args.subcommand == "resetpasses":
             pass_entity = (getattr(row, "passID"), getattr(row, "stationID"),
                 getattr(row, "tagID"), getattr(row, "amount"), getattr(row, "timestamp"),
                 getattr(row, "vehicleID"), getattr(row, "operatorID1"), getattr(row, "operatorID2"),
-                getattr(row, "stationID"))
+                getattr(row, "pass_type"))
             cursor.execute(add_pass, pass_entity)
         connection.commit()
-        ret = 0
+        status_code = 200
     except mysql.connector.Error as err:
         print(err)
-        ret = -1
-    if ret == 0:
+        status_code = 500
+    if status_code == 200:
         json_object = {"status": "OK"}
     else:
         json_object = {"status": "failed"}
@@ -131,12 +138,12 @@ elif args.subcommand == "resetstations":
             cursor.execute(add_station, station_entity)
             providers_stations_entity = (stationProvider, stationID)
             cursor.execute(add_providers_stations, providers_stations_entity)
-        ret = 0
+        status_code = 200
     except mysql.connector.Error as err:
         print(err)
-        ret = -1
+        status_code = 500
     connection.commit()
-    if ret == 0:
+    if status_code == 200:
         json_object = {"status": "OK"}
     else:
         json_object = {"status": "failed"}
@@ -160,18 +167,17 @@ elif args.subcommand == "resetvehicles":
             tag_entity = (getattr(row, "tagID"), getattr(row, "balance"), getattr(row, "tag_provider"), 
                 getattr(row, "provider_abbr"), )
             cursor.execute(add_tag, tag_entity)
-        ret = 0
+        status_code = 200
     except mysql.connector.Error as err:
         print(err)
-        ret = -1
+        status_code = 500
     connection.commit()
-    if ret == 0:
+    if status_code == 200:
         json_object = {"status": "OK"}
     else:
         json_object = {"status": "failed"}
     json.dump(json_object, f)
 elif args.subcommand == "passesperstation":
-    print("yes")
     try:
         cursor.execute("""select passID, timestamp, vehicleID, tag_provider, pass_type, amount
         from passes, tags
@@ -181,47 +187,56 @@ elif args.subcommand == "passesperstation":
         result = cursor.fetchall()
         if args.format == "json":
             save_as_json(result, "passesperstation.json")
+            status_code = 200
         elif args.format == "csv":
             save_as_csv(result, "passesperstation.csv")
+            status_code = 200
         else:
-            print("Incorrect format!")
+            #print("Incorrect format!")
+            status_code = 400
     except mysql.connector.Error as err:
         print(err)
-        ret = -1
+        status_code = 500
 elif args.subcommand == "passesanalysis":
     try:
         cursor.execute("""select passID, stationID, timestamp, vehicleID, amount
             from passes
-            where pass_type = "visitor" and operatorID1 = '""" + args.op1 + """' and operatorID2 = '""" + 
+            where pass_type = 'visitor' and operatorID1 = '""" + args.op1 + """' and operatorID2 = '""" + 
             args.op2 + """' and timestamp >= """ + args.datefrom + """ and timestamp <= """ + args.dateto +
             " order by timestamp")
         result = cursor.fetchall()
         if args.format == "json":
             save_as_json(result, "passesanalysis.json")
+            status_code = 200
         elif args.format == "csv":
             save_as_csv(result, "passesanalysis.csv")
+            status_code = 200
         else:
-            print("Incorrect format!")
+            #print("Incorrect format!")
+            status_code = 400
     except mysql.connector.Error as err:
         print(err)
-        ret = -1
+        status_code = 500
 elif args.subcommand == "passescost":
     try:
         cursor.execute("""select count(*) as NumberofPasses, sum(amount) as PassesCost
             from passes
             where operatorID1 = '""" + args.op1 + """"' and operatorID2 = '""" + args.op2 +
-            """ and timestamp >= """ + args.datefrom + """ and timestamp <= """ + args.dateto +
+            """' and timestamp >= """ + args.datefrom + """ and timestamp <= """ + args.dateto +
             " order by timestamp")
         result = cursor.fetchall()
         if args.format == "json":
             save_as_json(result, "passescost.json")
+            status_code = 200
         elif args.format == "csv":
             save_as_csv(result, "passescost.csv")
+            status_code = 200
         else:
-            print("Incorrect format!")
+            #print("Incorrect format!")
+            status_code = 400
     except mysql.connector.Error as err:
         print(err)
-        ret = -1
+        status_code = 500
 elif args.subcommand == "chargesby":
     try:
         cursor.execute("""select operatorID2, count(*) as NumberOfPasses, sum(amount) as PassesCost
@@ -231,35 +246,41 @@ elif args.subcommand == "chargesby":
         result = cursor.fetchall()
         if args.format == "json":
             save_as_json(result, "chargesby.json")
+            status_code = 200
         elif args.format == "csv":
             save_as_csv(result, "chargesby.csv")
+            status_code = 200
         else:
-            print("Incorrect format!")
+            #print("Incorrect format!")
+            status_code = 400
     except mysql.connector.Error as err:
         print(err)
-        ret = -1
+        status_code = 500
 elif args.subcommand == "admin":
     if args.passesupd:
         if args.source is None: 
             print("Could not open file!")
+            status_code = 400
         else:
             try:
+                data = pandas.read_csv(args.source, engine="python")
                 add_pass = ("""INSERT INTO passes 
                         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)""")
-
-                data = pandas.read_csv(args.source, engine="python")
-
-                for row in data.itertuples(index=False):
-                    pass_entity = (getattr(row, "passID"), getattr(row, "stationID"),
+                try: 
+                    for row in data.itertuples(index=False):
+                        pass_entity = (getattr(row, "passID"), getattr(row, "stationID"),
                         getattr(row, "tagID"), getattr(row, "amount"), getattr(row, "timestamp"),
                         getattr(row, "vehicleID"), getattr(row, "operatorID1"), getattr(row, "operatorID2"),
                         getattr(row, "stationID"))
                     cursor.execute(add_pass, pass_entity)
-                connection.commit()
-                ret = 0
-            except mysql.connector.Error as err:
-                print(err)
-                ret = -1
-
+                    connection.commit()
+                    status_code = 200
+                except mysql.connector.Error as err:
+                    print(err)
+                    status_code = 500
+            except Exception:
+                    status_code = 400
+                
 cursor.close()
 connection.close()
+print(status_code)
