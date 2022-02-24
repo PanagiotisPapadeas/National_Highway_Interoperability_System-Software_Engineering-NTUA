@@ -47,7 +47,7 @@ myresult4 = mycursor.fetchall()
 
 
 #1.print(myresult1)
-if((myresult1[0][5]) == 2.8):
+if((myresult1[0][5]) == 3.1):
 	print ("PASSESPS amount: " + colors.OKGREEN + "SUCCESS" + colors.ENDC) 
 else: print("PASSESPS" + colors.FAIL + "FAIL" + colors.ENDC)
 
