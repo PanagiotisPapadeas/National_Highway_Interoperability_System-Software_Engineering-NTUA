@@ -10,9 +10,9 @@ const api = axios.create({
 
 export default function Charges(){
     
-    const [amount, setAmount] = useState(0)
+    // const [amount, setAmount] = useState(0)
         
-    const chargeRequest = (() => {
+    const chargeRequest = (async () => {
         
     var op1 = document.getElementById("operators1").value;
     var op2 = document.getElementById("operators2").value;
@@ -20,8 +20,7 @@ export default function Charges(){
     var end = document.getElementById("end_datetime1").value;
     const res = api.get("PassesCost/" + op1 + "/" + op2 + "/" + start + "/" + end)
     .then((res) => {
-        let newamount = JSON.stringify(res.data.PassesCost);
-        alert(newamount);
+        alert("The amount of money " + op2 + " owns to " + op1 + " is: " + JSON.stringify(res.data.PassesCost));
     })
 });
     return(

@@ -42,7 +42,7 @@ export default function Stats() {
 
     const [passNum, setPassNum] = useState();
     
-    const passesRequest = (() => {
+    const passesRequest = (async () => {
         var station = document.getElementById("station").value;
         var start = document.getElementById("start_datetime2").value;
         var end = document.getElementById("end_datetime2").value;
