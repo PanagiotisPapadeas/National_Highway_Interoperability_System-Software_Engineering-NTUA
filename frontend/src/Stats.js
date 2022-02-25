@@ -38,9 +38,9 @@ window.onload = function () {
 //===============================================================================================================
 
 export default function Stats() {
-    var passNum;
+    // var passNum;
 
-    //const [passNum, setPassNum] = useState();
+    const [passNum, setPassNum] = useState();
     
     const passesRequest = (() => {
         var station = document.getElementById("station").value;
@@ -102,8 +102,9 @@ export default function Stats() {
                     </li>
                 </ol>
                 <input onClick={passesRequest} type="submit" value="Submit" size="10"></input>
-                {/* <h2 id = "tofill"></h2> */}
-                <p>Number of passes in the specified time period: <b>{passNum}</b></p>
+                <br></br>
+                <br></br>
+                <p>Number of passes in the specified time period: <b>{passNum}</b></p>            
             </form>
         </>
     )
