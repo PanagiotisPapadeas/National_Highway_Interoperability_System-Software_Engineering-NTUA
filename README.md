@@ -1,6 +1,7 @@
 # TL21-31
 
 ## Dependencies
+- MySQL/MariaDB
 - Python 3 with the following libraries:
     - argparse
     - pandas

@@ -1,3 +1,4 @@
 cli/results/*
 cli/.*
 test-cli/results/*
+test-cli/.*
