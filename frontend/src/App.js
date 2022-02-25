@@ -7,8 +7,6 @@ import Stats from "./Stats";
 export default function App(){
   return(      
       <>
-        {/* <select> name </select> */}
-        {/* {this.state.values.map(value => <h2 key = {value.status}>{value.dbconnection}</h2>)} */}
         <div className="main_title">
           <h1>Welcome to <em>Highway Interoperability System</em></h1>
         </div>
@@ -16,11 +14,15 @@ export default function App(){
           <Charges />
           <Stats />
         </div>
-        {/* <p>USERNAME: {userName}</p>  */}
       </>
     );
   }
-// }
+
+
+
+
+
+
 
 
 

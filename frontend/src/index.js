@@ -5,6 +5,8 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 // import "materialize-css/dist/css/materialize.min.css";
+import Charges from "./Charges";
+import Stats from "./Stats";
 
 //======================================================
 // const user = localStorage.getItem('user');
@@ -24,9 +26,9 @@ import reportWebVitals from './reportWebVitals';
 //======================================================
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  // <React.StrictMode>
+    <App />,
+  // </React.StrictMode>,
   document.getElementById('root')  //Affects index.html's root div
 );
 
