@@ -185,14 +185,17 @@ elif args.subcommand == "passesperstation":
         + args.datefrom + """ and timestamp <= """ + args.dateto +
         " order by timestamp")
         result = cursor.fetchall()
-        if args.format == "json":
-            save_as_json(result, "passesperstation.json")
-            status_code = 200
-        elif args.format == "csv":
-            save_as_csv(result, "passesperstation.csv")
-            status_code = 200
+        if len(result) == 0:
+            status_code = 402
         else:
-            status_code = 400
+            if args.format == "json":
+                save_as_json(result, "passesperstation.json")
+                status_code = 200
+            elif args.format == "csv":
+                save_as_csv(result, "passesperstation.csv")
+                status_code = 200
+            else:
+                status_code = 400
     except mysql.connector.Error as err:
         print(err)
         status_code = 500
@@ -204,14 +207,17 @@ elif args.subcommand == "passesanalysis":
             args.op2 + """' and timestamp >= """ + args.datefrom + """ and timestamp <= """ + args.dateto +
             " order by timestamp")
         result = cursor.fetchall()
-        if args.format == "json":
-            save_as_json(result, "passesanalysis.json")
-            status_code = 200
-        elif args.format == "csv":
-            save_as_csv(result, "passesanalysis.csv")
-            status_code = 200
+        if len(result) == 0:
+            status_code = 402
         else:
-            status_code = 400
+            if args.format == "json":
+                save_as_json(result, "passesanalysis.json")
+                status_code = 200
+            elif args.format == "csv":
+                save_as_csv(result, "passesanalysis.csv")
+                status_code = 200
+            else:
+                status_code = 400
     except mysql.connector.Error as err:
         print(err)
         status_code = 500
@@ -240,14 +246,17 @@ elif args.subcommand == "chargesby":
             where operatorID1 = '""" + args.op1 + """' and pass_type = 'visitor' and timestamp >= """ +
             args.datefrom + """ and timestamp <= """ + args.dateto + " group by operatorID2")
         result = cursor.fetchall()
-        if args.format == "json":
-            save_as_json(result, "chargesby.json")
-            status_code = 200
-        elif args.format == "csv":
-            save_as_csv(result, "chargesby.csv")
-            status_code = 200
+        if len(result) == 0:
+            status_code = 402
         else:
-            status_code = 400
+            if args.format == "json":
+                save_as_json(result, "chargesby.json")
+                status_code = 200
+            elif args.format == "csv":
+                save_as_csv(result, "chargesby.csv")
+                status_code = 200
+            else:
+                status_code = 400
     except mysql.connector.Error as err:
         print(err)
         status_code = 500
