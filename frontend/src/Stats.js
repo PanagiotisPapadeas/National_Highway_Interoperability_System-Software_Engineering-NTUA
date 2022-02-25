@@ -48,28 +48,9 @@ export default function Stats() {
         var end = document.getElementById("end_datetime2").value;
         const res = api.get("PassesPerStation/" + station + "/" + start + "/" + end)
         .then((res) => {
-            alert(res.data.NumberOfPasses);
-            // setPassNum(JSON.stringify(res.data.NumberOfPasses));
-            // var onoma = document.getElementById("tofill")
-            // onoma.innerHTML = "EDW: " + JSON.stringify(res.data.NumberOfPasses);
-            // passNum = JSON.stringify(res.data.NumberOfPasses);
+            alert("Total number of passes between " + start + " and " + end + " on station " + station + " is: " + res.data.NumberOfPasses);
     }); 
 });
-
-    // useEffect
-
-
-    // console.log(op1);
-    // console.log(op2);
-    // console.log(start);
-    // console.log(end);
-    // const res = api.get()
-    // setPassNum((JSON.stringify(res.data.NumberOfPasses))s);
-    // setAmount(JSON.stringify(res.data.PassesCost));
-    // return(JSON.stringify(res.data.PassesCost));
-
-    // })
-    // });    
 
     return (
         <>
@@ -104,7 +85,7 @@ export default function Stats() {
                 <input onClick={passesRequest} type="submit" value="Submit" size="10"></input>
                 <br></br>
                 <br></br>
-                <p>Number of passes in the specified time period: <b>{passNum}</b></p>            
+                {/* <p>Number of passes in the specified time period: <b>{passNum}</b></p>             */}
             </form>
         </>
     )
